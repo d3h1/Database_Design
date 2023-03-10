@@ -1,5 +1,6 @@
 import tkinter as tk
 import sqlite3
+import os
 
 # Connect to the database
 conn = sqlite3.connect('testing.sqlite')
@@ -25,14 +26,14 @@ def register():
     confirmPassword = confirmPassword_entry.get()
     
     # Check if the username already exists
-    c.execute('SELECT * FROM users WHERE username=?', (username,))
+    c.execute('SELECT * FROM users WHERE username = ?', (username,))
     if c.fetchone() is not None:
         # Username already exists
         register_label.config(text='Username already exists!', fg='red')
         return
     
     # Check if the email already exists
-    c.execute('SELECT * FROM users WHERE email=?', (email,))
+    c.execute('SELECT * FROM users WHERE email = ?', (email,))
     if c.fetchone() is not None:
         # Email already exists
         register_label.config(text='Email already exists!', fg='red')
@@ -45,11 +46,21 @@ def register():
         return
     
     # Insert the new user into the database
-    c.execute('INSERT INTO users VALUES (?, ?, ?, ?, ?)', (username, email, firstName, lastName, password))
-    conn.commit()
+    try:
+        c.execute('INSERT INTO users (username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?)',
+                  (username, email, firstName, lastName, password))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        # Failed to insert user
+        register_label.config(text='Registration failed!', fg='red')
+        return
         
     # Registration successful
     register_label.config(text='Registration successful!', fg='green')
+    
+    # Launch gui.py
+    os.system("python Backend/gui.py")
+
 
 # Create the tkinter window
 root = tk.Tk()
