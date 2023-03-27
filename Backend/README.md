@@ -2,8 +2,12 @@
 
 # FOR PYTHON -- PHASE 1
 We might need to install 2 libraries || usually standard libraries in python now
-    -> pip install tkinter
-    -> pip install sqlite3
+## IMPORTS NEEDED
+    pip install tkinter
+    pip install sqlite3
+    import os
+    import runpy
+    
 
 Then we will import and create the code around that.
 
@@ -16,3 +20,5 @@ Then we will import and create the code around that.
     3. In the register page, we also use a modified 'INSERT' statement. 
 
 # INITIALIZATION DATABASE BUTTON
+    1. By pressing hte button in the main GUI.PY, user is able to initialize a database
+    2. The login and signup should access that database to make their usernames, etc

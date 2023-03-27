@@ -1,8 +1,12 @@
 import tkinter as tk
 import sqlite3
+import os
+
+# Get the database path from the environment variable
+db_path = os.environ.get('DB_PATH', 'phase1.sqlite')
 
 # Connect to the database
-conn = sqlite3.connect('testing.sqlite')
+conn = sqlite3.connect(db_path)
 c = conn.cursor()
 
 # Create the tkinter window
