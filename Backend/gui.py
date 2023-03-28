@@ -15,7 +15,7 @@ root.configure(bg='#C6DEF1')
 
 def find_project_root():
     current_folder = os.path.abspath(os.path.dirname(__file__))
-    while not os.path.exists(os.path.join(current_folder, "Backend")):
+    while not os.path.exists(os.path.join(current_folder)):
         current_folder = os.path.abspath(os.path.join(current_folder, os.pardir))
         if os.path.splitdrive(current_folder)[1] == '\\':
             raise FileNotFoundError("Could not find the project root folder")
@@ -23,8 +23,8 @@ def find_project_root():
 
 # Finding project root folder to collect the absolute paths
 project_root = find_project_root()
-signin_path = os.path.join(project_root, 'Backend', 'signin.py')
-signup_path = os.path.join(project_root, 'Backend', 'signup.py')
+signin_path = os.path.join(project_root, 'signin.py')
+signup_path = os.path.join(project_root, 'signup.py')
 
 # ! DEBUGGING PATHS
 # print("Signin path:", signin_path)
@@ -54,8 +54,38 @@ def run_script(script_path, db_path=None):
 
 def init_database(db_path):
     if not os.path.exists(db_path):
+        
+        # Connect to the database
         conn = sqlite3.connect(db_path)
+        # c = conn.cursor()
         # Add any additional code to initialize the database here
+        
+        # Create the users table
+        conn.execute('''CREATE TABLE IF NOT EXISTS users (
+             username TEXT PRIMARY KEY,
+             email TEXT,
+             firstName TEXT,
+             lastName TEXT,
+             password TEXT
+             )''')
+
+        # Add example users
+        example_users = [
+            ('user1', 'email1@gmail.com','first1','last1', 'password1'),
+            ('user2', 'email2@gmail.com','first2','last2', 'password2'),
+            ('user3', 'email3@gmail.com','first3','last3', 'password3'),
+            ('user4', 'email4@gmail.com','first4','last4', 'password4'),
+            ('user5', 'email5@gmail.com','first5','last5', 'password5'),
+        ]
+
+        conn.executemany('''
+        INSERT INTO users (username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?);
+        ''', example_users)
+
+        # Commit the changes and close the connection
+        conn.commit()
+        
+        # Close connection
         conn.close()
 
 # Creating the path to the DB that we initialize

@@ -61,8 +61,8 @@ def register():
     # Registration successful
     register_label.config(text='Registration successful!', fg='green')
     
-    # Launch gui.py
-    os.system("python Backend/gui.py")
+    # # Launch gui.py
+    # os.system("python Backend\gui.py")
 
 
 # Create the tkinter window
@@ -115,3 +115,4 @@ register_label.grid(row=7, column=1, padx=5, pady=5)
 
 # Run the tkinter main loop
 root.mainloop()
+
