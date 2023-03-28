@@ -1,5 +1,8 @@
 # We are creating a python application that uses certain GUI builders to create a login / registration page that connects directly to an sql database. 
 
+# Youtube link
+    https://www.youtube.com/watch?v=yNvEfQz4tw8
+
 # FOR PYTHON -- PHASE 1
 We might need to install 2 libraries || usually standard libraries in python now
 ## IMPORTS NEEDED
