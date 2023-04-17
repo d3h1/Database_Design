@@ -14,7 +14,7 @@
     <header>
       <h1>User Search</h1>
     </header>
-    <section>
+    <section class="search-section">
       <h2>Search for Categories</h2>
       <form method="GET" action="{{ url_for('search_items') }}">
         <label for="category">Category:</label>
@@ -23,20 +23,22 @@
       </form>
     </section>
 
-    <section>
+    <section class="results-section">
         <h2>Search Results</h2>
         <ul id="search-results">
           {% if search_results %}
             {% for result in search_results %}
-              <li><a href="/item/{{ result[0] }}">{{ result[1] }}</a></li>
+              <li>
+                <a href="{{ url_for('item_detail', item_id=result[0]) }}">{{ result[2] }} ({{ result[4] }})</a>
+              </li>
             {% endfor %}
           {% else %}
             <li>No results found.</li>
           {% endif %}
         </ul>
-      </section>
+    </section>
 
-    <section>
+    <section class="add-item-section">
       <h1>Add Item</h1>
       
       <form method="POST" action="{{ url_for('add_item') }}">
@@ -65,12 +67,9 @@
         </div>
       </form>
     </section>
-    <a href="{{ url_for('searchbar') }}"
-        ><button type="button">Search Bar</button></a
-      >
+    <a href="{{ url_for('handle_signin') }}" class="search-bar-btn">Back to Profile</a>
     <footer>
       <p>&copy; 2023 - All Rights Reserved</p>
     </footer>
   </body>
 </html>
-

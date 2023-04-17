@@ -21,6 +21,7 @@ def init_database():
                         password TEXT
                         )''')
         conn.execute('''CREATE TABLE IF NOT EXISTS items (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                         username TEXT,
                         title TEXT,
                         description TEXT,
@@ -28,6 +29,14 @@ def init_database():
                         price REAL,
                         date TEXT
                         )''')
+        
+        conn.execute('''CREATE TABLE IF NOT EXISTS reviews (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    item_id INTEGER,
+                    rating TEXT,
+                    description TEXT
+                    )''')
+
         
         # Add example users
         example_users = [
@@ -181,9 +190,28 @@ def search_items():
 
 @app.route('/item/<int:item_id>/')
 def item_detail(item_id):
-    return render_template('selected.html', item_id=item_id)
+    with sqlite3.connect(db_path) as conn:
+        c = conn.cursor()
+        c.execute('SELECT * FROM items WHERE id = ?', (item_id,))
+        item = c.fetchone()
+        if item:
+            c.execute('SELECT * FROM reviews WHERE item_id = ?', (item_id,))
+            reviews = c.fetchall()
+            return render_template('selected.html', item=item, reviews=reviews)
+        else:
+            return "Item not found", 404
 
-#Aaron
+
+@app.route('/item/<int:item_id>/submit_review', methods=['POST'])
+def submit_review(item_id):
+    rating = request.form['rating']
+    description = request.form['description']
+    with sqlite3.connect(db_path) as conn:
+        c = conn.cursor()
+        c.execute('INSERT INTO reviews (item_id, rating, description) VALUES (?, ?, ?)', (item_id, rating, description))
+        conn.commit()
+        flash('Review submitted successfully!', app.config['FLASH_CATEGORY'])
+    return redirect(url_for('item_detail', item_id=item_id))
 
 
 if __name__ == '__main__':
