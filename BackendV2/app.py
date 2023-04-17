@@ -9,6 +9,7 @@ db_path = 'phase1.sqlite'
 
 app.config['FLASH_CATEGORY'] = 'now'
 
+
 def init_database():
     if not os.path.exists(db_path):
         conn = sqlite3.connect(db_path)
@@ -19,7 +20,7 @@ def init_database():
                         lastName TEXT,
                         password TEXT
                         )''')
-        
+
         conn.execute('''CREATE TABLE IF NOT EXISTS items (
                         username TEXT,
                         title TEXT,
@@ -32,23 +33,24 @@ def init_database():
         conn.close()
 
 # @app.route('/api/create_review', methods=['POST'])
-@app.route('/add_item', methods=['GET','POST'])
+
+
+@app.route('/add_item', methods=['POST'])
 def add_item():
-    if request.method == 'POST':
-        
-        title = request.form['title']
-        description = request.form['description']
-        category = request.form['category']
-        price = request.form['price']
-        today = date.today()
-        
-        with sqlite3.connect(db_path) as conn:
-            c = conn.cursor()
-            c.execute('''INSERT INTO items (title, description, category, price, date) VALUES (?, ?, ?, ?, ?)''', (title, description, category, price, today))
-            conn.commit()
-            
-            flash('Item added successfully!', app.config['FLASH_CATEGORY'])
+    print(request.data)
+    title = request.form['title']
+    description = request.form['description']
+    category = request.form['category']
+    price = request.form['price']
+    today = date.today()
+    with sqlite3.connect(db_path) as conn:
+        c = conn.cursor()
+        c.execute('''INSERT INTO items (title, description, category, price, date) VALUES (?, ?, ?, ?, ?)''',
+                  (title, description, category, price, today))
+        conn.commit()
+        flash('Item added successfully!', app.config['FLASH_CATEGORY'])
     return render_template('searchbar.html')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -68,10 +70,12 @@ def handle_signin():
         password = request.form['password']
         with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
-            c.execute('SELECT * FROM users WHERE username=? AND password=?', (username, password))
+            c.execute(
+                'SELECT * FROM users WHERE username=? AND password=?', (username, password))
             user = c.fetchone()
             if user is None:
-                flash('Invalid username or password!', app.config['FLASH_CATEGORY'])
+                flash('Invalid username or password!',
+                      app.config['FLASH_CATEGORY'])
             else:
                 flash('Sign in successful!', app.config['FLASH_CATEGORY'])
                 return redirect(url_for('profile', firstName=user[2], lastName=user[3]))
@@ -107,7 +111,8 @@ def handle_signup():
                 return redirect(url_for('handle_signup'))
 
             if password != confirmPassword:
-                flash('Passwords do not match!', 'danger', app.config['FLASH_CATEGORY'])
+                flash('Passwords do not match!', 'danger',
+                      app.config['FLASH_CATEGORY'])
                 return redirect(url_for('handle_signup'))
 
             c.execute('''INSERT INTO users (username, email, firstName, lastName, password) 
@@ -118,7 +123,6 @@ def handle_signup():
             return redirect(url_for('handle_signin'))
 
     return render_template('signup.html')
-
 
 
 @app.route('/searchbar', methods=['GET', 'POST'])
