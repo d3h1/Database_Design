@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 import sqlite3
 import os
+from datetime import date
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -18,18 +19,36 @@ def init_database():
                         lastName TEXT,
                         password TEXT
                         )''')
+        
         conn.execute('''CREATE TABLE IF NOT EXISTS items (
                         username TEXT,
                         title TEXT,
                         description TEXT,
                         category TEXT,
-                        price TEXT,
+                        price REAL,
                         date TEXT
                         )''')
         conn.commit()
         conn.close()
 
-@app.route
+# @app.route('/api/create_review', methods=['POST'])
+@app.route('/add_item', methods=['GET','POST'])
+def add_item():
+    if request.method == 'POST':
+        
+        title = request.form['title']
+        description = request.form['description']
+        category = request.form['category']
+        price = request.form['price']
+        today = date.today()
+        
+        with sqlite3.connect(db_path) as conn:
+            c = conn.cursor()
+            c.execute('''INSERT INTO items (title, description, category, price, date) VALUES (?, ?, ?, ?)''', (title, description, category, price, today))
+            conn.commit()
+            
+            flash('Item added successfully!', app.config['FLASH_CATEGORY'])
+    return render_template('searchbar.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
