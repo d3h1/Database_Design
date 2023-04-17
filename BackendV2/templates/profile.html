@@ -1,54 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='profile.css') }}"
+    />
+  </head>
+  <body>
     <header>
-        <h1>Welcome to your profile, {{name}}!</h1> <!-- Replace [username] with the user's actual name -->
+      <h1>Welcome to your profile, {{name}}!</h1>
+      <!-- Replace [username] with the user's actual name -->
+      <a href="{{ url_for('searchbar') }}"
+        ><button type="button">Search Bar</button></a
+      >
     </header>
-
     <section>
-        <h2>Profile Information</h2>
-        <div>
-            <img src="profile_picture.jpg" alt="Profile picture" width="150" height="150"> <!-- Add profile picture path -->
-            <p>Name: [Full Name]</p>
-            <p>Username: [username]</p>
-            <p>Email: [email]</p>
-        </div>
+      <h2>Profile Information</h2>
+      <div>
+        <img
+          src="profile_picture.jpg"
+          alt="Profile picture"
+          width="150"
+          height="150"
+        />
+        <!-- Add profile picture path -->
+        <p>Name: [Full Name]</p>
+        <p>Username: [username]</p>
+        <p>Email: [email]</p>
+      </div>
     </section>
-
     <section>
-        <h2>Profile Settings</h2>
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
-
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username">
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password">
-
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" id="confirm_password" name="confirm_password">
-
-            <button type="submit">Save Changes</button>
-            <br>
-            <br>
-            <br>
-            <a href="{{ url_for('searchbar') }}"><button type="button">Post Your Items Here</button></a>
-        </form>
+      <h2>Profile Settings</h2>
+      <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" />
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" />
+        <button type="submit">Save Changes</button>
+      </form>
     </section>
-
     <footer>
-        <p>&copy; 2023 - All Rights Reserved</p>
+      <p>&copy; 2023 - All Rights Reserved</p>
     </footer>
-</body>
+  </body>
 </html>
