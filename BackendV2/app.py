@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, session
 import sqlite3
 import os
 from datetime import datetime, timedelta
@@ -105,13 +105,14 @@ def handle_signin():
                 flash('Invalid username or password!', app.config['FLASH_CATEGORY'])
             else:
                 flash('Sign in successful!', app.config['FLASH_CATEGORY'])
-                return redirect(url_for('profile', firstName=user[2], lastName=user[3]))
+                return redirect(url_for('profile',username=user[0], email=user[1], firstName=user[2], lastName=user[3]))
+                
     return render_template('signin.html')
 
 
-@app.route('/profile/<firstName>/<lastName>')
-def profile(firstName, lastName):
-    return render_template('profile.html', name=firstName + " " + lastName)
+@app.route('/profile/<firstName>/<lastName>/<username>/<email>')
+def profile(firstName, lastName, username, email):
+    return render_template('profile.html', name=firstName + " " + lastName, username=username, email=email)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -212,6 +213,11 @@ def submit_review(item_id):
         conn.commit()
         flash('Review submitted successfully!', app.config['FLASH_CATEGORY'])
     return redirect(url_for('item_detail', item_id=item_id))
+
+@app.route('/clear-flash', methods=['POST'])
+def clear_flash():
+    session.pop('_flashes', None)
+    return '', 204
 
 
 if __name__ == '__main__':
