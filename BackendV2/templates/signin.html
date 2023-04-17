@@ -18,6 +18,10 @@
             <br>
             <input type="submit" value="Sign In">
         </form>
+        <form method="POST">
+            <input type="hidden" name="action" value="init_db">
+            <button type="submit">Init Database</button>
+        </form>
         <p>Don't have an account? <a href="{{ url_for('handle_signup') }}">Sign Up</a></p>
         <div class="error-messages">
             <div class="messages">

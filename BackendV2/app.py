@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 import sqlite3
 import os
-from datetime import date
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -28,27 +28,23 @@ def init_database():
                         price REAL,
                         date TEXT
                         )''')
+        
+        # Add example users
+        example_users = [
+            ('user1', 'email1@gmail.com','first1','last1', 'password1'),
+            ('user2', 'email2@gmail.com','first2','last2', 'password2'),
+            ('user3', 'email3@gmail.com','first3','last3', 'password3'),
+            ('user4', 'email4@gmail.com','first4','last4', 'password4'),
+            ('user5', 'email5@gmail.com','first5','last5', 'password5'),
+        ]
+
+        conn.executemany('''
+        INSERT INTO users (username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?);
+        ''', example_users)
+        
+        
         conn.commit()
         conn.close()
-
-# @app.route('/api/create_review', methods=['POST'])
-@app.route('/add_item', methods=['GET','POST'])
-def add_item():
-    if request.method == 'POST':
-        
-        title = request.form['title']
-        description = request.form['description']
-        category = request.form['category']
-        price = request.form['price']
-        today = date.today()
-        
-        with sqlite3.connect(db_path) as conn:
-            c = conn.cursor()
-            c.execute('''INSERT INTO items (title, description, category, price, date) VALUES (?, ?, ?, ?, ?)''', (title, description, category, price, today))
-            conn.commit()
-            
-            flash('Item added successfully!', app.config['FLASH_CATEGORY'])
-    return render_template('searchbar.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -58,8 +54,29 @@ def main():
             return handle_signin()
         elif action == 'signup':
             return redirect(url_for('handle_signup'))
-    return redirect(url_for('handle_signin'))
+        elif action == 'init_db':
+            init_database()
+            flash('Database initialize successfully!', app.config['FLASH_CATEGORY'])
+    return render_template('signin.html')
 
+@app.route('/add_item', methods=['GET','POST'])
+def add_item():
+    if request.method == 'POST':
+        
+        username = request.form['username']
+        title = request.form['title']
+        description = request.form['description']
+        category = request.form['category']
+        price = request.form['price']
+        today = date.today()
+    
+        with sqlite3.connect(db_path) as conn:
+            c = conn.cursor()
+            c.execute('''INSERT INTO items (username, title, description, category, price, date) VALUES (?, ?, ?, ?, ?, ?)''', (username, title, description, category, price, today))
+            conn.commit()
+            
+            flash('Item added successfully!', app.config['FLASH_CATEGORY'])
+    return render_template('searchbar.html')
 
 @app.route('/signin', methods=['GET', 'POST'])
 def handle_signin():
