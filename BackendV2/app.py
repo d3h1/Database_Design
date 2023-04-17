@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import sqlite3
 import os
 from datetime import datetime, timedelta
@@ -59,23 +59,33 @@ def main():
             flash('Database initialize successfully!', app.config['FLASH_CATEGORY'])
     return render_template('signin.html')
 
-@app.route('/add_item', methods=['GET','POST'])
+from datetime import datetime, timedelta
+
+@app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     if request.method == 'POST':
-        
         username = request.form['username']
         title = request.form['title']
         description = request.form['description']
         category = request.form['category']
         price = request.form['price']
-        today = date.today()
-    
+        today = datetime.now()
+        yesterday = today - timedelta(days=1)
+        
         with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
-            c.execute('''INSERT INTO items (username, title, description, category, price, date) VALUES (?, ?, ?, ?, ?, ?)''', (username, title, description, category, price, today))
-            conn.commit()
+            c.execute('SELECT COUNT(*) FROM items WHERE username = ? AND date BETWEEN ? AND ?', (username, yesterday, today))
+            count = c.fetchone()[0]
             
-            flash('Item added successfully!', app.config['FLASH_CATEGORY'])
+            if count < 3:
+                c.execute('INSERT INTO items (username, title, description, category, price, date) VALUES (?, ?, ?, ?, ?, ?)', (username, title, description, category, price, today))
+                conn.commit()
+                flash('Item added successfully!', app.config['FLASH_CATEGORY'])
+                return render_template('searchbar.html', messages=messages)
+            else:
+                flash('You have reached the maximum limit of 3 posts in a day', app.config['FLASH_CATEGORY'])
+                return render_template('searchbar.html', messages=messages)
+                
     return render_template('searchbar.html')
 
 @app.route('/signin', methods=['GET', 'POST'])
