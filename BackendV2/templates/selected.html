@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selected Item</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='market.css') }}"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Selected Item</h1>
+    </header>
+    <section>
+      <h2>{{ selected_item.name }}</h2>
+      <p>{{ selected_item.description }}</p>
+      <p>Price: {{ selected_item.price }}</p>
+      <form method="POST" action="{{ url_for('submit_review') }}">
+        {% csrf_token %}
+        <input type="hidden" name="item_id" value="{{ selected_item.id }}">
+        <div>
+          <label for="review_rating">Rating:</label>
+          <select name="review_rating" id="review_rating">
+            <option value="excellent">Excellent</option>
+            <option value="good">Good</option>
+            <option value="fair">Fair</option>
+            <option value="poor">Poor</option>
+          </select>
+        </div>
+        <div>
+          <label for="review_text">Review:</label>
+          <textarea name="review_text" id="review_text"></textarea>
+        </div>
+        <button type="submit">Submit Review</button>
+      </form>
+    </section>
+    <a href="{{ url_for('searchbar') }}"><button type="button">Back to Search</button></a>
+    <footer>
+      <p>&copy; 2023 - All Rights Reserved</p>
+    </footer>
+  </body>
+</html>

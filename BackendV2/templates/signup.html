@@ -11,7 +11,7 @@
   <body>
     <div class="container">
       <h1>Sign Up</h1>
-      <form method="POST" action="{{ url_for('add_item') }}">
+      <form id="myForm" method="POST" action="{{ url_for('handle_signup') }}">
         <div class="error-messages">
           <div class="messages">
             {% with messages = get_flashed_messages(with_categories=true,

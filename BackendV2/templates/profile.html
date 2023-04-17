@@ -14,9 +14,6 @@
     <header>
       <h1>Welcome to your profile, {{name}}!</h1>
       <!-- Replace [username] with the user's actual name -->
-      <a href="{{ url_for('searchbar') }}"
-        ><button type="button">Search Bar</button></a
-      >
     </header>
     <section>
       <h2>Profile Information</h2>
@@ -47,6 +44,12 @@
         <label for="confirm_password">Confirm Password:</label>
         <input type="password" id="confirm_password" name="confirm_password" />
         <button type="submit">Save Changes</button>
+        <br>
+        <br>
+        <br>
+        <a href="{{ url_for('searchbar') }}"
+        ><button type="button">Search Bar</button></a
+      >
       </form>
     </section>
     

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, flash, redirect, url_for, jso
 import sqlite3
 import os
 from datetime import datetime, timedelta
+import json
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -19,7 +20,6 @@ def init_database():
                         lastName TEXT,
                         password TEXT
                         )''')
-        
         conn.execute('''CREATE TABLE IF NOT EXISTS items (
                         username TEXT,
                         title TEXT,
@@ -37,12 +37,9 @@ def init_database():
             ('user4', 'email4@gmail.com','first4','last4', 'password4'),
             ('user5', 'email5@gmail.com','first5','last5', 'password5'),
         ]
-
         conn.executemany('''
         INSERT INTO users (username, email, firstName, lastName, password) VALUES (?, ?, ?, ?, ?);
         ''', example_users)
-        
-        
         conn.commit()
         conn.close()
 
@@ -64,6 +61,7 @@ from datetime import datetime, timedelta
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     if request.method == 'POST':
+        print(request)
         username = request.form['username']
         title = request.form['title']
         description = request.form['description']
@@ -71,21 +69,18 @@ def add_item():
         price = request.form['price']
         today = datetime.now()
         yesterday = today - timedelta(days=1)
-        
         with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
             c.execute('SELECT COUNT(*) FROM items WHERE username = ? AND date BETWEEN ? AND ?', (username, yesterday, today))
             count = c.fetchone()[0]
-            
             if count < 3:
                 c.execute('INSERT INTO items (username, title, description, category, price, date) VALUES (?, ?, ?, ?, ?, ?)', (username, title, description, category, price, today))
                 conn.commit()
                 flash('Item added successfully!', app.config['FLASH_CATEGORY'])
-                return render_template('searchbar.html', messages=messages)
+                return render_template('searchbar.html')
             else:
                 flash('You have reached the maximum limit of 3 posts in a day', app.config['FLASH_CATEGORY'])
-                return render_template('searchbar.html', messages=messages)
-                
+                return render_template('searchbar.html')
     return render_template('searchbar.html')
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -150,7 +145,45 @@ def handle_signup():
 
 @app.route('/searchbar', methods=['GET', 'POST'])
 def searchbar():
-    return render_template('searchbar.html')
+    if request.method == 'GET':
+        with sqlite3.connect(db_path) as conn:
+            c = conn.cursor()
+            c.execute('SELECT DISTINCT category FROM items')
+            categories = [row[0] for row in c.fetchall()]
+            return render_template('searchbar.html', categories=categories)
+
+    elif request.method == 'POST':
+        selected_item_id = request.form.get('selected_item_id')
+        if selected_item_id:
+            # retrieve the selected item from the database and pass it to the selected.html template
+            with sqlite3.connect(db_path) as conn:
+                c = conn.cursor()
+                c.execute('SELECT * FROM items WHERE id = ?', (selected_item_id,))
+                item = c.fetchone()
+                if item:
+                    return render_template('selected.html', item=item)
+        
+        # if no item was selected, just render the searchbar template
+        return redirect(url_for('searchbar'))
+
+
+
+@app.route('/search_items', methods=['GET'])
+def search_items():
+    if request.method == 'GET':
+        category = request.args.get('category')
+        with sqlite3.connect(db_path) as conn:
+            c = conn.cursor()
+            c.execute('SELECT * FROM items WHERE category = ?', (category,))
+            items = c.fetchall()
+            return render_template('searchbar.html', search_results=items)
+    return redirect(url_for('searchbar'))
+
+@app.route('/item/<int:item_id>/')
+def item_detail(item_id):
+    return render_template('selected.html', item_id=item_id)
+
+#Aaron
 
 
 if __name__ == '__main__':
