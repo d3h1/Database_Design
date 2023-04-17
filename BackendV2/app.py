@@ -44,7 +44,7 @@ def add_item():
         
         with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
-            c.execute('''INSERT INTO items (title, description, category, price, date) VALUES (?, ?, ?, ?)''', (title, description, category, price, today))
+            c.execute('''INSERT INTO items (title, description, category, price, date) VALUES (?, ?, ?, ?, ?)''', (title, description, category, price, today))
             conn.commit()
             
             flash('Item added successfully!', app.config['FLASH_CATEGORY'])
