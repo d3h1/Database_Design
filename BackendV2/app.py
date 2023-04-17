@@ -8,6 +8,7 @@ db_path = 'phase1.sqlite'
 
 app.config['FLASH_CATEGORY'] = 'now'
 
+
 def init_database():
     if not os.path.exists(db_path):
         conn = sqlite3.connect(db_path)
@@ -29,8 +30,8 @@ def init_database():
         conn.commit()
         conn.close()
 
-@app.route
 
+@app.route
 @app.route('/', methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
@@ -49,10 +50,12 @@ def handle_signin():
         password = request.form['password']
         with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
-            c.execute('SELECT * FROM users WHERE username=? AND password=?', (username, password))
+            c.execute(
+                'SELECT * FROM users WHERE username=? AND password=?', (username, password))
             user = c.fetchone()
             if user is None:
-                flash('Invalid username or password!', app.config['FLASH_CATEGORY'])
+                flash('Invalid username or password!',
+                      app.config['FLASH_CATEGORY'])
             else:
                 flash('Sign in successful!', app.config['FLASH_CATEGORY'])
                 return redirect(url_for('profile', firstName=user[2], lastName=user[3]))
@@ -88,7 +91,8 @@ def handle_signup():
                 return redirect(url_for('handle_signup'))
 
             if password != confirmPassword:
-                flash('Passwords do not match!', 'danger', app.config['FLASH_CATEGORY'])
+                flash('Passwords do not match!', 'danger',
+                      app.config['FLASH_CATEGORY'])
                 return redirect(url_for('handle_signup'))
 
             c.execute('''INSERT INTO users (username, email, firstName, lastName, password) 
@@ -99,7 +103,6 @@ def handle_signup():
             return redirect(url_for('handle_signin'))
 
     return render_template('signup.html')
-
 
 
 @app.route('/searchbar', methods=['GET', 'POST'])
