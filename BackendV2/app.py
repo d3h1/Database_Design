@@ -32,9 +32,11 @@ def init_database():
         
         conn.execute('''CREATE TABLE IF NOT EXISTS reviews (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT,
                     item_id INTEGER,
                     rating TEXT,
-                    description TEXT
+                    description TEXT,
+                    date TEXT
                     )''')
 
         
@@ -70,7 +72,6 @@ from datetime import datetime, timedelta
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     if request.method == 'POST':
-        print(request)
         username = request.form['username']
         title = request.form['title']
         description = request.form['description']
@@ -80,15 +81,22 @@ def add_item():
         yesterday = today - timedelta(days=1)
         with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
-            c.execute('SELECT COUNT(*) FROM items WHERE username = ? AND date BETWEEN ? AND ?', (username, yesterday, today))
+            # Check if the username exists in the user table
+            c.execute('SELECT COUNT(*) FROM users WHERE username = ?', (username,))
             count = c.fetchone()[0]
-            if count < 3:
-                c.execute('INSERT INTO items (username, title, description, category, price, date) VALUES (?, ?, ?, ?, ?, ?)', (username, title, description, category, price, today))
-                conn.commit()
-                flash('Item added successfully!', app.config['FLASH_CATEGORY'])
-                return render_template('searchbar.html')
+            if count > 0:
+                c.execute('SELECT COUNT(*) FROM items WHERE username = ? AND date BETWEEN ? AND ?', (username, yesterday, today))
+                count = c.fetchone()[0]
+                if count < 3:
+                    c.execute('INSERT INTO items (username, title, description, category, price, date) VALUES (?, ?, ?, ?, ?, ?)', (username, title, description, category, price, today))
+                    conn.commit()
+                    flash('Item added successfully!', app.config['FLASH_CATEGORY'])
+                    return render_template('searchbar.html')
+                else:
+                    flash('You have reached the maximum limit of 3 posts in a day', app.config['FLASH_CATEGORY'])
+                    return render_template('searchbar.html')
             else:
-                flash('You have reached the maximum limit of 3 posts in a day', app.config['FLASH_CATEGORY'])
+                flash('Invalid username. Please enter a valid username.', app.config['FLASH_CATEGORY'])
                 return render_template('searchbar.html')
     return render_template('searchbar.html')
 
@@ -203,16 +211,40 @@ def item_detail(item_id):
             return "Item not found", 404
 
 
-@app.route('/item/<int:item_id>/submit_review', methods=['POST'])
+@app.route('/item/<int:item_id>/submit_review', methods=['GET','POST'])
 def submit_review(item_id):
-    rating = request.form['rating']
-    description = request.form['description']
-    with sqlite3.connect(db_path) as conn:
-        c = conn.cursor()
-        c.execute('INSERT INTO reviews (item_id, rating, description) VALUES (?, ?, ?)', (item_id, rating, description))
-        conn.commit()
-        flash('Review submitted successfully!', app.config['FLASH_CATEGORY'])
-    return redirect(url_for('item_detail', item_id=item_id))
+    if request.method == 'POST':
+        username = request.form['username']
+        rating = request.form['rating']
+        description = request.form['description']
+        today = datetime.now()
+        yesterday = today - timedelta(days=1)
+        with sqlite3.connect(db_path) as conn:
+            c = conn.cursor()
+            # Check if the username exists in the user table
+            c.execute('SELECT COUNT(*) FROM users WHERE username = ?', (username,))
+            user_count = c.fetchone()[0]
+            if user_count == 0:
+                flash('You must be a registered user to submit a review', app.config['FLASH_CATEGORY'])
+                return redirect(url_for('item_detail', item_id=item_id))
+            # Retrieve the username associated with the item_id
+            c.execute('SELECT username FROM items WHERE id = ?', (item_id,))
+            item_username = c.fetchone()[0]
+            if username == item_username:
+                flash('You cannot review your own product', app.config['FLASH_CATEGORY'])
+                return redirect(url_for('item_detail', item_id=item_id))
+            c.execute('SELECT COUNT(*) FROM reviews WHERE username = ? AND date BETWEEN ? AND ?', (username, yesterday, today))
+            count = c.fetchone()[0]
+            if count < 3:
+                c.execute('INSERT INTO reviews (username, item_id, rating, description, date) VALUES (?, ?, ?, ?, ?)', (username, item_id, rating, description, today))
+                conn.commit()
+                flash('Review submitted successfully!', app.config['FLASH_CATEGORY'])
+                return redirect(url_for('item_detail', item_id=item_id))
+            else: 
+                flash('You have reached the maximum limit of 3 reviews in a day', app.config['FLASH_CATEGORY'])
+            return redirect(url_for('item_detail', item_id=item_id))
+    return render_template('selected.html')
+    
 
 @app.route('/clear-flash', methods=['POST'])
 def clear_flash():
