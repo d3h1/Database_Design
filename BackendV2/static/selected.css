@@ -50,6 +50,9 @@ body {
     background-color: #333;
     color: #fff;
     padding: 0.5rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+    margin-bottom: 1rem;
     border-radius: 5px;
     border: none;
     cursor: pointer;
@@ -64,18 +67,27 @@ body {
   /* Item details */
   .item-details ul li {
     margin-bottom: 0.5rem;
+    text-align: center;
   }
   
   /* Reviews styles */
   .reviews .review {
-    background-color: #f2f2f2;
+    background-color: #dbdbdb;
     border-radius: 5px;
+    border-color: #161616;
     padding: 1rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
     margin-bottom: 1rem;
   }
   
-  .reviews .review p {
+  .reviews .review p, h2 {
     margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .submit-review label, input {
+    border-style: solid #161616;
   }
   
   /* Footer */

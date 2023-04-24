@@ -7,8 +7,8 @@ import json
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 db_path = 'phase1.sqlite'
-
 app.config['FLASH_CATEGORY'] = 'now'
+
 
 def init_database():
     if not os.path.exists(db_path):
@@ -38,7 +38,6 @@ def init_database():
                     description TEXT,
                     date TEXT
                     )''')
-
         
         # Add example users
         example_users = [
@@ -54,6 +53,7 @@ def init_database():
         conn.commit()
         conn.close()
 
+
 @app.route('/', methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
@@ -67,7 +67,6 @@ def main():
             flash('Database initialize successfully!', app.config['FLASH_CATEGORY'])
     return render_template('signin.html')
 
-from datetime import datetime, timedelta
 
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
@@ -99,6 +98,7 @@ def add_item():
                 flash('Invalid username. Please enter a valid username.', app.config['FLASH_CATEGORY'])
                 return render_template('searchbar.html')
     return render_template('searchbar.html')
+
 
 @app.route('/signin', methods=['GET', 'POST'])
 def handle_signin():
@@ -160,7 +160,6 @@ def handle_signup():
     return render_template('signup.html')
 
 
-
 @app.route('/searchbar', methods=['GET', 'POST'])
 def searchbar():
     if request.method == 'GET':
@@ -185,7 +184,6 @@ def searchbar():
         return redirect(url_for('searchbar'))
 
 
-
 @app.route('/search_items', methods=['GET'])
 def search_items():
     if request.method == 'GET':
@@ -196,6 +194,7 @@ def search_items():
             items = c.fetchall()
             return render_template('searchbar.html', search_results=items)
     return redirect(url_for('searchbar'))
+
 
 @app.route('/item/<int:item_id>/')
 def item_detail(item_id):
@@ -244,7 +243,7 @@ def submit_review(item_id):
                 flash('You have reached the maximum limit of 3 reviews in a day', app.config['FLASH_CATEGORY'])
             return redirect(url_for('item_detail', item_id=item_id))
     return render_template('selected.html')
-    
+ 
 
 @app.route('/clear-flash', methods=['POST'])
 def clear_flash():
