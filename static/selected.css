@@ -1,6 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
+
+:root {
+  --background-main: #f5f5f5;
+  --background-header: #333;
+  --background-button: #555;
+  --background-error: #f8d7da;
+  --background-submit: #4CAF50; 
+  --background-review: #dbdbdb;
+  --review-border: #161616;
+  --error-border: #f5c6cb;
+  --error-color: #721c24;
+  --text-color: #fff;
+}
+
+
 /* Global styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Muli', sans-serif;
     margin: 0;
     padding: 0;
   }
@@ -16,8 +32,8 @@ body {
   
   /* Header styles */
   header {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--background-header);
+    color: var(--text-color);
     padding: 1rem;
   }
   
@@ -47,8 +63,8 @@ body {
   }
   
   button[type="submit"], .search-bar-btn {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--background-button);
+    color: var(--text-color);
     padding: 0.5rem;
     margin-left: 15rem;
     margin-right: 15rem;
@@ -61,7 +77,7 @@ body {
   }
   
   button[type="submit"]:hover, .search-bar-btn:hover {
-    background-color: #555;
+    background-color: var(--background-button);
   }
   
   /* Item details */
@@ -72,9 +88,9 @@ body {
   
   /* Reviews styles */
   .reviews .review {
-    background-color: #dbdbdb;
+    background-color: var(--background-review);
     border-radius: 5px;
-    border-color: #161616;
+    border-color: var(--review-border);
     padding: 1rem;
     margin-left: 10rem;
     margin-right: 10rem;
@@ -87,13 +103,13 @@ body {
   }
 
   .submit-review label, input {
-    border-style: solid #161616;
+    border-style: solid var(--review-border);
   }
   
   /* Footer */
   footer {
-    background-color: #333;
-    color: #fff;
+    background-color: var(--background-header);
+    color: var(--text-color);
     padding: 1rem;
     text-align: center;
     margin-top: 2rem;
@@ -107,9 +123,9 @@ body {
 }
 
 .error-messages .messages {
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-    color: #721c24;
+    background-color: var(--background-error);
+    border: 1px solid var(--error-border);
+    color: var(--error-color);
     padding: 1em;
     border-radius: 0.25rem;
     font-weight: bold;

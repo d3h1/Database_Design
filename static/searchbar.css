@@ -1,9 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
+
+:root {
+  --background-main: #f5f5f5;
+  --background-header: #333;
+  --background-button: #555;
+  --background-error: #f8d7da;
+  --background-submit: #dff0d8; 
+  --submit-border: #c1eb9e;
+  --submit-color: #4CAF50;
+  --form-border: #ccc;
+  --error-border: #f5c6cb;
+  --error-color: #721c24;
+  --text-color: #fff;
+}
+
+
 /* Global styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Muli', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  background-color: var(--background-main);
 }
 
 h1,
@@ -18,8 +35,8 @@ ul {
 
 /* Header styles */
 header {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--background-header);
+  color: var(--text-color);
   padding: 1rem;
 }
 
@@ -45,8 +62,8 @@ textarea {
 }
 
 button[type='submit'] {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--background-button);
+  color: var(--text-color);
   padding: 0.5rem;
   border-radius: 5px;
   border: none;
@@ -55,7 +72,7 @@ button[type='submit'] {
 }
 
 button[type='submit']:hover {
-  background-color: #555;
+  background-color: var(--background-button);
 }
 
 /* Search results styles */
@@ -67,7 +84,7 @@ button[type='submit']:hover {
 }
 
 #search-results li {
-  background-color: #f2f2f2;
+  background-color: var(--background-main);
   border-radius: 5px;
   margin-bottom: 1rem;
   width: 30%;
@@ -82,9 +99,9 @@ button[type='submit']:hover {
 }
 
 .error-messages .messages {
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
+  /* background-color: var(--background-error);
+  border: 1px solid var(--error-border); */
+  color: var(--error-color);
   padding: 1em;
   border-radius: 0.25rem;
   font-weight: bold;
@@ -105,7 +122,7 @@ button[type='submit']:hover {
 
 /* Search section styles */
 .search-section {
-  background-color: white;
+  background-color: var(--background-main);
   margin: 1rem;
   padding: 1rem;
   border-radius: 5px;
@@ -113,7 +130,7 @@ button[type='submit']:hover {
 
 /* Results section styles */
 .results-section {
-  background-color: white;
+  background-color: var(--background-main);
   margin: 1rem;
   padding: 1rem;
   border-radius: 5px;
@@ -121,7 +138,7 @@ button[type='submit']:hover {
 
 /* Add item section styles */
 .add-item-section {
-  background-color: white;
+  background-color: var(--background-main);
   margin: 1rem;
   padding: 1rem;
   border-radius: 5px;
@@ -129,8 +146,8 @@ button[type='submit']:hover {
 
 /* Search bar button styles */
 .search-bar-btn {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--background-button);
+  color: var(--text-color);
   padding: 0.5rem;
   border-radius: 5px;
   border: none;
@@ -140,7 +157,7 @@ button[type='submit']:hover {
 }
 
 .search-bar-btn:hover {
-  background-color: #555;
+  background-color: var(--background-button);
 }
 
 @media screen and (max-width: 768px) {
