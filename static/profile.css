@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
 
 :root {
-  --background-main: #f5f5f5;
+  --background-main: #afafaf;
   --background-header: #333;
   --background-button: #555;
   --background-error: #f8d7da;
@@ -10,19 +10,86 @@
   --submit-color: #4CAF50;
   --form-border: #ccc;
   --error-border: #f5c6cb;
-  --error-color: #721c24;
+  --error-color: #ab2b38;
   --text-color: #fff;
 }
 
-/* Global styles */
+
 body {
   font-family: 'Muli', sans-serif;
+  overflow: hidden;
   margin: 0;
-  padding: 0;
+  background-color: var(--background-main);
+  color: var(--text-color);
 }
 
-h1, h2 {
-  font-weight: bold;
+/* Styles for the container */
+.container {
+  padding: 20px 40px;
+  display: grid;
+  border-radius: 5px;
+}
+
+/* Header styles */
+nav.active {
+  background-color: var(--background-header);
+  color: var(--text-color);
+  grid-column-start: 1;
+  grid-column-end: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+nav.active ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%
+}
+
+nav h1 {
+  text-align: center;
+}
+
+nav ul a {
+  color: var(--text-color3);
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.prof-info {
+  background-color: var(--background-button);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  grid-column-start: 1;
+  grid-column-end: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.search-btns {
+  background-color: var(--background-button);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  grid-column-start: 2;
+  grid-column-end: 3;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+h2 {
+  text-align: center;
+  margin-right: 30px;
+  font-size: 36px;
 }
 
 ul {
@@ -30,25 +97,14 @@ ul {
   padding: 0;
 }
 
-/* Header styles */
-header {
-  background-color: var(--background-header);
-  color: var(--text-color);
-  padding: 1rem;
-}
 
 /* Section styles */
 section {
   padding: 1rem;
-  margin: 3rem;
+  margin: 2rem;
 }
 
-/* Form styles */
-form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-}
+
 
 label {
   margin-top: 0.5rem;
@@ -62,18 +118,28 @@ input, select, textarea {
   font-size: 1rem;
 }
 
-button[type="submit"] {
-  background-color: var(--background-header);
-  color: var(--text-color);
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: none;
+.btn {
   cursor: pointer;
-  font-size: 1rem;
+  border: 3px solid var(--submit-border); 
+  border-radius: 5px;
+  color: var(--text-color);
+  background-color: var(--submit-color);
+  margin: 1rem;
+  padding: 5px 15px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  border: 0;
+  border-radius: 5px;
+  margin-top: 40px;
 }
 
-button[type="submit"]:hover {
+.btn:hover {
   background-color: var(--background-button);
+}
+
+.btn:active {
+  transform: scale(0.95);
 }
 
 /* Reviews styles */
