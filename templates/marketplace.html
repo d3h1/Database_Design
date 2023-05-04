@@ -1,3 +1,4 @@
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,20 +10,56 @@
       href="{{ url_for('static', filename='marketplace.css') }}"
     />
   </head>
-    <body>
-        <section class="expensive-items-section">
-            <h2>Most Expensive Items in Each Category</h2>
-            <ul id="item-results">
-              {% if max_prices %}
-                {% for result in max_prices %}
-                  <li>
-                    {{ result[4] }}: {{ result[5] }}
-                  </li>
-                {% endfor %}
-              {% else %}
-                <li>No results found.</li>
-              {% endif %}
-            </ul>
-        </section>
-    </body>
+  <body>
+    <section class="expensive-items-section">
+      <h2>Most Expensive Items in Each Category</h2>
+      <table id="item-results">
+        <thead>
+          <tr>
+            <th>CATEGORY</th>
+            <th>PRICE</th>
+          </tr>
+        </thead> 
+        <tbody>
+          {% if max_prices %}
+          {% for result in max_prices %}
+          <tr>
+            <td>{{ result[4] }}</td>
+            <td>{{ result[5] }}</td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="2">No results found.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html> 
+
+<html>
+<head>
+	<title>Search Results</title>
+</head>
+<body>
+	<h1>Search Results</h1>
+	<form method="POST">
+		<label for="category_x">Category X:</label>
+		<input type="text" id="category_x" name="category_x"><br><br>
+		<label for="category_y">Category Y:</label>
+		<input type="text" id="category_y" name="category_y"><br><br>
+		<input type="submit" value="Search">
+	</form>
+
+	{% if result %}
+		<p>The following users have posted at least two items on the same day, where one has category {{category_x}} and the other has category {{category_y}}:</p>
+		<ul>
+			{% for user in result %}
+			<li>{{ user.username }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+</body>
 </html>

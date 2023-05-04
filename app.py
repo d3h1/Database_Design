@@ -210,6 +210,23 @@ def search_items():
     return redirect(url_for('searchbar'))
 
 
+@app.route('/search_two', methods=['GET', 'POST'])
+def search_two():
+    if request.method == 'POST':
+        category_x = request.form.get('category_x')
+        category_y = request.form.get('category_y')
+        items = Item.query.filter(or_(Item.category==category_x, Item.category==category_y)).all()
+        result = []
+        for i in range(len(items)-1):
+            for j in range(i+1, len(items)):
+                if items[i].user_id == items[j].user_id and items[i].category != items[j].category and items[i].created.date() == items[j].created.date():
+                    result.append(items[i].user)
+                    break
+        return render_template('search_two.html', result=result)
+    else:
+        return render_template('search_two.html')
+
+
 @app.route('/item/<int:item_id>/')
 def item_detail(item_id):
     with sqlite3.connect(db_path) as conn:
