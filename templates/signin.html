@@ -11,16 +11,18 @@
   <body>
     <div class="container">
       <h1>Sign In</h1>
-      <form class="form-control" method="POST" action="{{ url_for('handle_signin') }}">
-        <input type="hidden" name="action" value="signin" />
-        <label  for="username">Username:</label>
-        <input type="text" name="username" required />
+      <form method="POST" action="{{ url_for('handle_signin') }}">
+        <div class="form-control">
+          <input type="hidden" name="action" value="signin" />
+          <input type="text" name="username" required />
+          <label  for="username">Username</label>
+        </div>
 
-        <br />
-        <label  for="password">Password:</label>
-        <input type="password" name="password" required />
+        <div class="form-control">
+          <input type="password" name="password" required />
+          <label  for="password">Password</label>
+        </div>
 
-        <br />
         <input type="submit" value="Sign In" />
       </form>
 

@@ -77,7 +77,7 @@
   /* Styles for the labels */
   .form-control label {
     position: absolute;
-    top: 15px;
+    bottom: 15px;
     left: 0;
   }
 
