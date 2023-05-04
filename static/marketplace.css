@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
+
+:root {
+  --background-main: #f5f5f5;
+  --background-header: #333;
+  --background-button: #555;
+  --background-error: #f8d7da;
+  --background-submit: #dff0d8; 
+  --submit-border: #c1eb9e;
+  --submit-color: #4CAF50;
+  --form-border: #ccc;
+  --error-border: #f5c6cb;
+  --error-color: #721c24;
+  --text-color: #fff;
+}
+
+
+/* Global styles */
+body {
+  font-family: 'Muli', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-main);
+}
+
+h1,
+h2 {
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  background-color: var(--background-header);
+  color: var(--text-color);
+  padding: 1rem;
+}
+
+/* Form styles */
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+label {
+  margin-top: 0.5rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+}

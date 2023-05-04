@@ -1,0 +1,28 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Item and User Lists</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='marketplace.css') }}"
+    />
+  </head>
+    <body>
+        <section class="expensive-items-section">
+            <h2>Most Expensive Items in Each Category</h2>
+            <ul id="item-results">
+              {% if max_prices %}
+                {% for result in max_prices %}
+                  <li>
+                    {{ result[4] }}: {{ result[5] }}
+                  </li>
+                {% endfor %}
+              {% else %}
+                <li>No results found.</li>
+              {% endif %}
+            </ul>
+        </section>
+    </body>
+</html>

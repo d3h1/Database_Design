@@ -180,6 +180,7 @@ def searchbar():
         # if no item was selected, just render the searchbar template
         return redirect(url_for('searchbar'))
 
+
 @app.route('/searchusers', methods=['GET'])
 def searchusers():
     print(request.args.get('query', None))
@@ -188,6 +189,22 @@ def searchusers():
             c = conn.cursor()
             c.execute('SELECT ')
     return render_template('searchusers.html')
+
+@app.route('/marketplace')
+def marketplace():
+    with sqlite3.connect(db_path) as conn:
+        c = conn.cursor()
+        # Fetch all items from the database
+        c.execute('SELECT * FROM items')
+        items = c.fetchall()
+        
+        # Fetch most expensive items
+        c.execute('SELECT *, MAX(price) as max_prices FROM items GROUP by category')
+        max_prices = c.fetchall()
+        
+        return render_template('marketplace.html', item_results=items, max_prices = max_prices)
+
+
 
 @app.route('/search_items', methods=['GET'])
 def search_items():
