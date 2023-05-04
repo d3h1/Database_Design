@@ -8,6 +8,11 @@ Allowed the user to add items, reviews, and search for categories. With this, th
 post, and more. 
 <br><b>Link to Phase 2</b>: https://youtu.be/CIbhRpu4Fr4
 
+<b>Phase 3</b> : Added lists for expensive items, users posting twice, filtering users based on their comments | date | etc. We 
+also base item lists on most number of items within a date range. Posts never receiving comments or categories can also be filtered, etc. 
+We can also display users whoe posted certain things. 
+<br><b>Link to Phase 3</b>:
+
 ## Project Information
 <!-- Contributions -->
 <b>Python</b>
