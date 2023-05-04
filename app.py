@@ -156,7 +156,6 @@ def handle_signup():
 
             flash('Registration successful!', app.config['FLASH_CATEGORY'])
             return redirect(url_for('handle_signin'))
-
     return render_template('signup.html')
 
 
@@ -168,20 +167,28 @@ def searchbar():
             c.execute('SELECT DISTINCT category FROM items')
             categories = [row[0] for row in c.fetchall()]
             return render_template('searchbar.html', categories=categories)
-
     elif request.method == 'POST':
         selected_item_id = request.form.get('selected_item_id')
         if selected_item_id:
             # retrieve the selected item from the database and pass it to the selected.html template
             with sqlite3.connect(db_path) as conn:
                 c = conn.cursor()
-                c.execute('SELECT * FROM items WHERE id = ?', (selected_item_id,))
+                c.execute('SELECT * FROM items WHERE id = ?', (selected_item_id))
                 item = c.fetchone()
                 if item:
                     return render_template('selected.html', item=item)
-        
         # if no item was selected, just render the searchbar template
         return redirect(url_for('searchbar'))
+
+
+@app.route('/searchusers', methods=['GET'])
+def searchusers():
+    print(request.args.get('query', None))
+    if request.args.get('query'):
+        with sqlite.connect(db_path) as conn:
+            c = conn.cursor()
+            c.execute('SELECT ')
+    return render_template('searchusers.html')
 
 @app.route('/marketplace')
 def marketplace():
@@ -196,6 +203,7 @@ def marketplace():
         max_prices = c.fetchall()
         
         return render_template('marketplace.html', item_results=items, max_prices = max_prices)
+
 
 
 @app.route('/search_items', methods=['GET'])
