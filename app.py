@@ -185,7 +185,7 @@ def searchbar():
 def searchusers():
     print(request.args.get('query', None))
     if request.args.get('query'):
-        with sqlite.connect(db_path) as conn:
+        with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
             c.execute('SELECT ')
     return render_template('searchusers.html')
