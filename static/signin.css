@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
 
 :root {
-  --background-main: #f5f5f5;
+  --background-main: #afafaf;
   --background-header: #333;
   --background-button: #555;
   --background-error: #f8d7da;
@@ -10,69 +10,138 @@
   --submit-color: #4CAF50;
   --form-border: #ccc;
   --error-border: #f5c6cb;
-  --error-color: #721c24;
+  --error-color: #ab2b38;
   --text-color: #fff;
 }
 
-/* Styles for the container */
-.container {
-    width: 400px;
-    margin: 0 auto;
-    text-align: center;
-    background-color: var(--background-main);
-    padding: 20px;
-    border-radius: 10px;
+  body {
     font-family: 'Muli', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    background-color: var(--background-main);
+    color: var(--text-color);
+  }
+
+/* Styles for the container */
+  .container {
+    background-color: var(--background-header);
+    padding: 20px 40px;
+    border-radius: 5px;
   }
   
+  .container-init {
+    background-color: var(--background-header);
+    border-radius: 5px;
+
+  }
+
   /* Styles for the heading */
   h1 {
+    text-align: center;
+    margin-bottom: 30px;
     font-size: 36px;
-    margin-bottom: 20px;
   }
   
   /* Styles for the form */
-  form {
-    display: inline-block;
-    text-align: left;
+  .form-control {
+    position: relative;
+    margin: 20px 0 40px;
+    width: 300px;
   }
   
-  /* Styles for the labels */
-  label {
-    display: inline-block;
-    width: 100px;
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
   
   /* Styles for the input fields */
-  input[type="text"],
-  input[type="password"] {
-    width: 250px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
+  .form-control input[type="text"],
+  .form-control input[type="password"] {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px var(--text-color) solid;
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    font-size: 18px;
+    color: var(--text-color);
   }
+  
+  .form-control input:focus, 
+  .form-control input:valid {
+    outline: 0; 
+    border-bottom-color: var(--background-button); 
+  }
+
+  /* Styles for the labels */
+  .form-control label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+  }
+
+  .form-control label span {
+    display: inline-block;
+    font-size: 18px;
+    min-width: 5px;
+    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  } 
+
+  .form-control input:focus + label span,
+  .form-control input:valid + label span {
+    color: var(--background-button);
+    transform: translateY(-30px)
+}
   
   /* Styles for the submit button */
   input[type="submit"] {
-    background-color: var(--background-submit);
-    color: var(--submit-color);
-    font-size: 18px;
-    padding: 10px 20px;
-    border: 1px solid var(--submit-border);
-    border-radius: 5px;
     cursor: pointer;
+    display: inline-block;
+    border: 1px solid var(--submit-border); 
+    border-radius: 5px;
+    color: var(--submit-color);
+    background-color: var(--background-submit);
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 18px;
+    border: 0;
+    border-radius: 5px;
   }
+
   
   /* Styles for the link to sign up */
   p {
     margin-top: 20px;
   }
   a {
+    margin-left: 10px;
     color: var(--submit-color);
     text-decoration: none;
+  }
+
+  .btn {
+    cursor: pointer;
+    display: flex;
+    border: 1px solid var(--submit-border); 
+    border-radius: 5px;
+    color: var(--submit-color);
+    background-color: var(--background-submit);
+    padding: 10px 20px;
+    font-family: inherit;
+    font-size: 18px;
+    border: 0;
+    border-radius: 5px;
+    margin-left: 80px;
+    margin-top: 40px;
+  }
+
+  .btn:focus {
+    outline: 0;
+  }
+
+  .btn:active {
+    transform: scale(.98);
   }
   
     .error-messages {
