@@ -18,6 +18,7 @@
       <h2>Search for Categories</h2>
       <form method="GET" action="{{ url_for('search_items') }}">
         <label for="category">Category:</label>
+        <br>
         <input
           type="text"
           id="category"
@@ -70,9 +71,9 @@
         </div>
       </form>
     </section>
-
-    <a href="{{ url_for('handle_signin') }}" class="search-bar-btn">Back to Profile</a>
+    
     <a href="{{ url_for('handle_signin') }}" class="search-bar-btn">Logout</a>
+    <a href="{{ url_for('handle_signin') }}" class="search-bar-btn">Back to Profile</a>
     <a href="{{ url_for('marketplace') }}" class="search-bar-btn">Marketplace</a>
 
     <footer>
