@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Search</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      form {
+        margin: 20px auto;
+        display: inline-block;
+      }
+
+      input[type="text"] {
+        padding: 5px 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        width: 200px;
+      }
+
+      input[type="submit"] {
+        padding: 5px 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-color: #f0f0f0;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #e0e0e0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User Search</h1>
+    <form action="/searchusers" method="GET">
+      <input type="text" name="query" placeholder="Search users..." required />
+      <input type="submit" value="Search" />
+    </form>
+  </body>
+</html>
