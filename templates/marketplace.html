@@ -36,30 +36,28 @@
         </tbody>
       </table>
     </section>
+
+    <section class="user-results">
+        <h2>Search User Posting Twice Today</h2>
+        <form method="POST">
+            <label for="category_x">Category X:</label>
+            <input type="text" id="category_x" name="category_x"><br><br>
+            <label for="category_y">Category Y:</label>
+            <input type="text" id="category_y" name="category_y"><br><br>
+            <input type="submit" value="Search">
+        </form>
+        
+        {% if result %}
+            <p>The following users have posted at least two items on the same day, where one has category {{category_x}} and the other has category {{category_y}}:</p>
+            <ul>
+                {% for user in result %}
+                <li>{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+    
   </body>
 </html> 
 
-<html>
-<head>
-	<title>Search Results</title>
-</head>
-<body>
-	<h1>Search Results</h1>
-	<form method="POST">
-		<label for="category_x">Category X:</label>
-		<input type="text" id="category_x" name="category_x"><br><br>
-		<label for="category_y">Category Y:</label>
-		<input type="text" id="category_y" name="category_y"><br><br>
-		<input type="submit" value="Search">
-	</form>
 
-	{% if result %}
-		<p>The following users have posted at least two items on the same day, where one has category {{category_x}} and the other has category {{category_y}}:</p>
-		<ul>
-			{% for user in result %}
-			<li>{{ user.username }}</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
-</body>
-</html>
