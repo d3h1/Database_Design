@@ -121,7 +121,8 @@ def handle_signin():
 
 @app.route('/profile/<firstName>/<lastName>/<username>/<email>')
 def profile(firstName, lastName, username, email):
-    return render_template('profile.html', name=firstName + " " + lastName, username=username, email=email)
+    
+    return render_template('profile.html', name=firstName + " " + lastName, username=username, email=email) 
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -188,22 +189,49 @@ def searchusers():
     if request.args.get('query'):
         with sqlite3.connect(db_path) as conn:
             c = conn.cursor()
-            c.execute('SELECT ')
+            c.execute('''SELECT DISTINCT username FROM items WHERE username NOT IN (SELECT DISTINCT username FROM items WHERE rating = "Poor")''')
+            item = c.fetchall()
+            print(item)
     return render_template('searchusers.html')
 
 @app.route('/marketplace')
 def marketplace():
-    with sqlite3.connect(db_path) as conn:
-        c = conn.cursor()
-        # Fetch all items from the database
-        c.execute('SELECT * FROM items')
-        items = c.fetchall()
+        with sqlite3.connect(db_path) as conn:
+            c = conn.cursor()
+            # Fetch all items from the database
+            c.execute('SELECT * FROM items')
+            items = c.fetchall()
         
         # Fetch most expensive items
         c.execute('SELECT *, MAX(price) as max_prices FROM items GROUP by category')
         max_prices = c.fetchall()
         
-        return render_template('marketplace.html', item_results=items, max_prices = max_prices)
+        # Get the two categories entered by the user
+        category1 = request.args.get('category1')
+        category2 = request.args.get('category2')
+        
+        # Search for the user who has both categories
+        c.execute('SELECT username FROM items WHERE category=? OR category=? GROUP BY username HAVING COUNT(DISTINCT category) = 2', (category1, category2))
+        users = c.fetchall()
+        
+        # Get the username entered by the user
+        username = request.args.get('username')
+        
+        # Fetch all reviews from the database for the given username and rating
+        c.execute('SELECT id, username, item_id, rating, description, date FROM reviews WHERE username=? AND rating IN ("Excellent", "Great")', (username,))
+        reviews = c.fetchall()
+        
+        
+        # # Fetch all usernames from the database for the given rating
+        # c.execute('SELECT DISTINCT username FROM reviews WHERE rating=?', ('Poor',))
+        # users = c.fetchall()
+        
+        # Fetch all usernames from the database for the given rating
+        c.execute('SELECT DISTINCT username FROM reviews WHERE rating=?', ('Poor',))
+        users = c.fetchall()
+
+    
+        return render_template('marketplace.html', item_results=items, max_prices = max_prices, users=users, reviews=reviews)
 
 
 

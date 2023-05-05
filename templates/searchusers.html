@@ -39,9 +39,26 @@
   </head>
   <body>
     <h1>User Search</h1>
-    <form action="/searchusers" method="GET">
-      <input type="text" name="query" placeholder="Search users..." required />
-      <input type="submit" value="Search" />
+    
+    <form method="GET" action="{{ url_for('searchusers') }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Users with No Poor Reviews</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user[0] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </form>
   </body>
 </html>

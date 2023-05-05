@@ -11,6 +11,15 @@
     />
   </head>
   <body>
+    <nav class="active">
+
+      <ul>
+        <li><a href="{{ url_for('searchbar') }}">Search</a></li>
+        <li><a href="{{ url_for('handle_signin') }}">Logout</a></li>
+      </ul>
+
+    </nav>
+
     <section class="expensive-items-section">
       <h2>Most Expensive Items in Each Category</h2>
       <table id="item-results">
@@ -39,23 +48,76 @@
 
     <section class="user-results">
         <h2>Search User Posting Twice Today</h2>
-        <form method="POST">
-            <label for="category_x">Category 1:</label>
-            <input type="text" id="category_x" name="category_x"><br><br>
-            <label for="category_y">Category 2:</label>
-            <input type="text" id="category_y" name="category_y"><br><br>
-            <input type="submit" value="Search">
+        <form method="get" action="{{ url_for('marketplace') }}">
+          <label for="category1">Category 1:</label>
+          <input type="text" name="category1" id="category1"><br><br>
+          <label for="category2">Category 2:</label>
+          <input type="text" name="category2" id="category2"><br><br>
+          <input type="submit" value="Search">
         </form>
         
-        {% if result %}
-            <p>The following users have posted at least two items on the same day, where one has category {{category_x}} and the other has category {{category_y}}:</p>
-            <ul>
-                {% for user in result %}
-                <li>{{ user.username }}</li>
-                {% endfor %}
-            </ul>
+        {% if users %}
+          <h2>Users with both categories:</h2>
+          <ul>
+            {% for username in users %}
+              <li>{{ username[0] }}</li>
+            {% endfor %}
+          </ul>
         {% endif %}
     </section>
+    
+    <section class="user-rating">
+      <form method="get" action="{{ url_for('marketplace') }}">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <button type="submit">Search</button>
+      </form>
+      
+      {% if reviews %}
+        <h2>Reviews for {{ username }}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Item ID</th>
+              <th>Rating</th>
+              <th>Description</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for review in reviews %}
+              <tr>
+                <td>{{ review[0] }}</td>
+                <td>{{ review[1] }}</td>
+                <td>{{ review[2] }}</td>
+                <td>{{ review[3] }}</td>
+                <td>{{ review[4] }}</td>
+                <td>{{ review[5] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+
+
+      <h2>Users with No Poor Reviews</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user[0] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </section>
     
   </body>
 </html> 
