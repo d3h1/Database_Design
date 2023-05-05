@@ -17,10 +17,10 @@
         <h1>Welcome, {{name}}!</h1>
 
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Works</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="./profile.html">Profile</a></li>
+          <li><a href="{{ url_for('searchbar') }}">Searchbar</a></li>
+          <li><a href="{{ url_for('marketplace') }}">Marketplace</a></li>
+          <li><a href="{{ url_for('handle_signin') }}">Logout</a></li>
         </ul>
 
       </nav>

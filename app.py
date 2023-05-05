@@ -20,6 +20,7 @@ def init_database():
                         lastName TEXT,
                         password TEXT
                         )''')
+        
         conn.execute('''CREATE TABLE IF NOT EXISTS items (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         username TEXT,
@@ -147,11 +148,11 @@ def handle_signup():
                 return redirect(url_for('handle_signup'))
 
             if password != confirmPassword:
-                flash('Passwords do not match!', 'danger', app.config['FLASH_CATEGORY'])
+                flash('Passwords do not match!', app.config['FLASH_CATEGORY'])
                 return redirect(url_for('handle_signup'))
 
             c.execute('''INSERT INTO users (username, email, firstName, lastName, password) 
-                          VALUES (?, ?, ?, ?, ?)''', (username, email, firstName, lastName, password))
+                        VALUES (?, ?, ?, ?, ?)''', (username, email, firstName, lastName, password))
             conn.commit()
 
             flash('Registration successful!', app.config['FLASH_CATEGORY'])

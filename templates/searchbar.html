@@ -11,9 +11,11 @@
     />
   </head>
   <body>
+
     <header>
       <h1>User Search</h1>
     </header>
+
     <section class="search-section">
       <h2>Search for Categories</h2>
       <form method="GET" action="{{ url_for('search_items') }}">
@@ -29,6 +31,7 @@
         <button type="submit" id="search-items">Search</button>
       </form>
     </section>
+
     <section class="results-section">
       <h2>Search Results</h2>
       <ul id="search-results">
@@ -43,6 +46,7 @@
         {% endif %}
       </ul>
     </section>
+
     <section class="add-item-section">
       <h1>Add Item</h1>
       <form method="POST" action="{{ url_for('add_item') }}">
@@ -73,13 +77,11 @@
     </section>
     
     <a href="{{ url_for('handle_signin') }}" class="search-bar-btn">Logout</a>
-    <a href="{{ url_for('handle_signin') }}" class="search-bar-btn">Back to Profile</a>
+    <a href="{{ url_for('handle_signup') }}" class="search-bar-btn">Back to Profile</a>
     <a href="{{ url_for('marketplace') }}" class="search-bar-btn">Marketplace</a>
 
-    <footer>
-      <p>&copy; 2023 - All Rights Reserved</p>
-    </footer>
   </body>
+
   <script>
     window.addEventListener("beforeunload", function () {
       let xhr = new XMLHttpRequest();
