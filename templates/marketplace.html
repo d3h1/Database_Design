@@ -20,89 +20,209 @@
 
     </nav>
 
-    <section class="expensive-items-section">
-      <h2>Most Expensive Items in Each Category</h2>
-      <table id="item-results">
-        <thead>
-          <tr>
-            <th>CATEGORY</th>
-            <th>PRICE</th>
-          </tr>
-        </thead> 
-        <tbody>
-          {% if max_prices %}
-          {% for result in max_prices %}
-          <tr>
-            <td>{{ result[4] }}</td>
-            <td>{{ result[5] }}</td>
-          </tr>
-          {% endfor %}
-          {% else %}
-          <tr>
-            <td colspan="2">No results found.</td>
-          </tr>
-          {% endif %}
-        </tbody>
-      </table>
-    </section>
+      <!-- TASK 1 -->
+      <section class="expensive-items-section">
+        <h2>Most Expensive Items in Each Category</h2>
+        <table id="item-results">
+          <thead>
+            <tr>
+              <th>CATEGORY</th>
+              <th>PRICE</th>
+            </tr>
+          </thead> 
+          <tbody>
+            {% if max_prices %}
+            {% for result in max_prices %}
+            <tr>
+              <td>{{ result[4] }}</td>
+              <td>{{ result[5] }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="2">No results found.</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </section>
 
-    <section class="user-results">
-        <h2>Search User Posting Twice Today</h2>
+      <!-- TASK 2 -->
+      <section class="user-twice">
+          <h2>Search User Posting Twice Today</h2>
+          <form method="get" action="{{ url_for('marketplace') }}">
+            <label for="category1">Category 1:</label>
+            <input type="text" name="category1" id="category1"><br><br>
+            <label for="category2">Category 2:</label>
+            <input type="text" name="category2" id="category2"><br><br>
+            <input type="submit" value="Search">
+          </form>
+        
+          {% if users %}
+          <h2>Users with both categories:</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for username in users %}
+                <tr>
+                  <td>{{ username[0] }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </section>
+
+      <!-- TASK 3 -->
+      <section class="user-rating">
+        <h2>Search User Items with Only Excellent/Great Ratings</h2>
         <form method="get" action="{{ url_for('marketplace') }}">
-          <label for="category1">Category 1:</label>
-          <input type="text" name="category1" id="category1"><br><br>
-          <label for="category2">Category 2:</label>
-          <input type="text" name="category2" id="category2"><br><br>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username">
           <input type="submit" value="Search">
         </form>
         
-        {% if users %}
-          <h2>Users with both categories:</h2>
-          <ul>
-            {% for username in users %}
-              <li>{{ username[0] }}</li>
-            {% endfor %}
-          </ul>
+        {% if reviews %}
+          
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Item </th>
+                <th>Rating</th>
+                <th>Description</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for review in reviews %}
+                <tr>
+                  <td>{{ review[0] }}</td>
+                  <td>{{ review[1] }}</td>
+                  <td>{{ review[2] }}</td>
+                  <td>{{ review[3] }}</td>
+                  <td>{{ review[4] }}</td>
+                  <td>{{ review[5] }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         {% endif %}
-    </section>
-    
-    <section class="user-rating">
-      <form method="get" action="{{ url_for('marketplace') }}">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <button type="submit">Search</button>
-      </form>
+      </section>
+
+      <!-- TASK 4 -->
+      <section class="user-most-items">
+        {% if top_users %}
+          <h2>Users with the most items posted since 5/1/2020:</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Username  </th>
+                <th># of Items Posted</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in top_users %}
+                <tr>
+                  <td>{{ user[0] }}</td>
+                  <td>{{ user[1] }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </section>
+
+
+      <!-- TASK 5, Not sure if working properly  -->
+      <section class="two-favorites">
+        <h2>User that is Favored by Two Other Users</h2>
+        <table>
+          <tr>
+            <th>User 1</th>
+            <th>User 2</th>
+            <th>Favorite User</th>
+          </tr>
+          {% for row in favorite_users %}
+          <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </section>
+
       
-      {% if reviews %}
-        <h2>Reviews for {{ username }}</h2>
+      <!-- TASK 6 -->
+      <section class="user-noexcellent">
+        <h2>Users who don't have any Excellent Items</h2>
         <table>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Username</th>
-              <th>Item ID</th>
-              <th>Rating</th>
-              <th>Description</th>
-              <th>Date</th>
             </tr>
           </thead>
           <tbody>
-            {% for review in reviews %}
+            {% for user in excellent_users %}
               <tr>
-                <td>{{ review[0] }}</td>
-                <td>{{ review[1] }}</td>
-                <td>{{ review[2] }}</td>
-                <td>{{ review[3] }}</td>
-                <td>{{ review[4] }}</td>
-                <td>{{ review[5] }}</td>
+                <td>{{ user }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
-      {% endif %}
+      </section>
+      
 
+  
+      <!-- TASK 7 -->
+      <section class="user-nopoor">
+          <h2>Users with No Poor Reviews</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users2 %}
+              <tr>
+                <td>{{ user[0] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </section>
 
-      <h2>Users with No Poor Reviews</h2>
+      <!-- TASK 8 -->
+      <section class="user-poor-reviews">
+        {% if poor_review_users %}
+        <h2>Users who posted "Poor" reviews:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in poor_review_users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </section>
+
+    <!-- TASK 9, Not sure if working properly -->
+    <section class="good-item-users">
+      <h2>User who've never received a Poor Review'</h2>
       <table>
         <thead>
           <tr>
@@ -110,14 +230,37 @@
           </tr>
         </thead>
         <tbody>
-          {% for user in users %}
+          {% for user in good_item_users %}
           <tr>
             <td>{{ user[0] }}</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
-  </section>
+    </section>
+
+    <!-- TASK 10, Not sure if working properly -->
+    <section class="pair-excellent">  
+      <h2>These two always Rate Each Other Excellent'</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>User A</th>
+            <th>User B</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for pair in excellent_review_pairs %}
+          <tr>
+            <td>{{ pair[0] }}</td>
+            <td>{{ pair[1] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+
     
   </body>
 </html> 

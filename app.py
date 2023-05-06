@@ -202,36 +202,106 @@ def marketplace():
             c.execute('SELECT * FROM items')
             items = c.fetchall()
         
-        # Fetch most expensive items
+        # (TASK 1)
+        # Fetch most expensive items 
         c.execute('SELECT *, MAX(price) as max_prices FROM items GROUP by category')
         max_prices = c.fetchall()
         
+        # (TASK 2)
         # Get the two categories entered by the user
         category1 = request.args.get('category1')
         category2 = request.args.get('category2')
         
-        # Search for the user who has both categories
-        c.execute('SELECT username FROM items WHERE category=? OR category=? GROUP BY username HAVING COUNT(DISTINCT category) = 2', (category1, category2))
+        # (TASK 2)
+        # Search for the user who has both categories 
+        c.execute('SELECT DISTINCT username FROM items WHERE category=? OR category=? GROUP BY username HAVING COUNT(DISTINCT category) = 2', (category1, category2))
         users = c.fetchall()
         
-        # Get the username entered by the user
+        # (TASK 3)
+        # Get the username entered by the user 
         username = request.args.get('username')
         
-        # Fetch all reviews from the database for the given username and rating
-        c.execute('SELECT id, username, item_id, rating, description, date FROM reviews WHERE username=? AND rating IN ("Excellent", "Great")', (username,))
+        # (TASK 3 - modified)
+        # Fetch all reviews from the database for the given username and rating, along with the corresponding item titles
+        c.execute('SELECT r.id, r.username, i.title, r.rating, r.description, r.date FROM reviews r JOIN items i ON r.item_id = i.id WHERE r.username=? AND r.rating IN ("Excellent", "Great")', (username,))
         reviews = c.fetchall()
         
+        # (TASK 4)
+        # List the users who posted the most number of items since 5/1/2020 (inclusive) 
+        c.execute('''
+                    SELECT username, COUNT(*) as num_items
+                    FROM items
+                    WHERE date >= "2020-05-01"
+                    GROUP BY username
+                    HAVING num_items = (
+                        SELECT COUNT(*)
+                        FROM items
+                        WHERE date >= "2020-05-01"
+                        GROUP BY username
+                        ORDER BY COUNT(*) DESC
+                        LIMIT 1
+            )
+    ''')
+        top_users = c.fetchall()
         
-        # # Fetch all usernames from the database for the given rating
-        # c.execute('SELECT DISTINCT username FROM reviews WHERE rating=?', ('Poor',))
-        # users = c.fetchall()
+        # (TASK 5, Not Sure if working properly)
+        # List users who are favorited by both users X, and Y.
+        c.execute('''
+            SELECT DISTINCT i.username
+            FROM items i
+            JOIN reviews r1 ON i.id = r1.item_id AND r1.username = :user_x
+            JOIN reviews r2 ON i.id = r2.item_id AND r2.username = :user_y
+            WHERE r1.rating = "Excellent" AND r2.rating = "Excellent"
+        ''', {'user_x': 'X', 'user_y': 'Y'})
+        favorite_users = c.fetchall()
         
-        # Fetch all usernames from the database for the given rating
-        c.execute('SELECT DISTINCT username FROM reviews WHERE rating=?', ('Poor',))
-        users = c.fetchall()
+        # (TASK 6)
+        # Display all the users who never posted any "excellent" items
+        c.execute('''
+            SELECT DISTINCT items.username
+            FROM items
+            LEFT JOIN reviews ON items.id = reviews.item_id
+            WHERE reviews.rating = "Excellent" OR reviews.rating IS NULL
+        ''')
+        excellent_users = c.fetchall()
+        
+        # (TASK 7)
+        # Fetch all usernames from the database for the given rating of Poor
+        c.execute('SELECT DISTINCT username FROM reviews WHERE rating!=?', ('Poor',))
+        users2 = c.fetchall()
+        
+        # (TASK 8)
+        # Display all the users who posted reviews with a rating of "Poor"
+        c.execute('SELECT DISTINCT username FROM reviews WHERE rating = "Poor"')
+        poor_review_users = c.fetchall()
+        
+        # (TASK 9, Not Sure if working properly)
+        # Display users such that each item they posted so far never received any "Poor" reviews
+        c.execute('''
+            SELECT DISTINCT i.username
+            FROM items i
+            LEFT JOIN reviews r ON i.id = r.item_id
+            WHERE r.rating != "Poor" OR r.rating IS NULL
+            GROUP BY i.username, i.id
+            HAVING COUNT(DISTINCT r.rating) = 2
+        ''')
+        good_item_users = c.fetchall()
+        
+        # (TASK 10, Not sure if working properly)
+        # Get a user pair (A, B) such that they always gave each other "excellent" reviews for every single item they posted
+        c.execute('''
+                    SELECT i1.username as user1, i2.username as user2
+                    FROM items i1, items i2
+                    LEFT JOIN reviews r1 ON i1.id = r1.item_id
+                    LEFT JOIN reviews r2 ON i2.id = r2.item_id
+                    WHERE i1.username != i2.username AND i1.id = i2.id
+                    AND r1.rating = "Excellent" AND r2.rating = "Excellent"
+                ''')
+        excellent_review_pair = c.fetchall()
+
 
     
-        return render_template('marketplace.html', item_results=items, max_prices = max_prices, users=users, reviews=reviews)
+        return render_template('marketplace.html', item_results=items, max_prices = max_prices, users=users, users2=users2, reviews=reviews, top_users=top_users, excellent_users=excellent_users, poor_review_users=poor_review_users, good_item_users=good_item_users, excellent_review_pair=excellent_review_pair, favorite_users=favorite_users)
 
 
 
