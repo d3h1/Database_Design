@@ -14,19 +14,12 @@
       <ul>
         <li><a href="{{ url_for('searchbar') }}">Search</a></li>
         <li><a href="{{ url_for('handle_signin') }}">Logout</a></li>
-
-        <li>
-          <a
-            href="/profile/<{{firstName}}>/<{{lastName}}>/<{{username}}>/<{{email}}>"
-            >Profile</a
-          >
-        </li>
       </ul>
     </nav>
 
     <!-- TASK 1 -->
     <section class="expensive-items-section">
-      <h2>Most Expensive Items in Each Category</h2>
+      <h2>1.Most Expensive Items in Each Category</h2>
       <table id="item-results">
         <thead>
           <tr>
@@ -51,7 +44,7 @@
 
     <!-- TASK 2 -->
     <section class="user-twice">
-      <h2>Search User Posting Twice Today</h2>
+      <h2>2.Search User Posting Twice Today</h2>
       <form method="get" action="{{ url_for('marketplace') }}">
         <label for="category1">Category 1:</label>
         <input type="text" name="category1" id="category1" /><br /><br />
@@ -81,7 +74,7 @@
 
     <!-- TASK 3 -->
     <section class="user-rating">
-      <h2>Search User Items with Only Excellent/Great Ratings</h2>
+      <h2>3.Search User Items with Only Excellent/Great Ratings</h2>
       <form method="get" action="{{ url_for('marketplace') }}">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" />
@@ -120,7 +113,7 @@
     <!-- TASK 4 -->
     <section class="user-most-items">
       {% if top_users %}
-      <h2>Users with the most items posted since 5/1/2020:</h2>
+      <h2>4.Users with the most items posted since 5/1/2020:</h2>
       <table>
         <thead>
           <tr>
@@ -142,7 +135,7 @@
 
     <!-- TASK 5 -->
     <section class="common-favorites-section">
-      <h2>Find Users with Common Favorite Users</h2>
+      <h2>5.Find Users with Common Favorite Users</h2>
       <form method="post" action="{{ url_for('marketplace') }}">
         <label for="username">Select a username:</label>
         <select name="username" id="username">
@@ -185,7 +178,7 @@
     
     <!-- TASK 6 -->
     <section class="user-noexcellent">
-      <h2>Users who don't have any Excellent Items</h2>
+      <h2>6.Users who don't have any Excellent Items</h2>
       <table>
         <thead>
           <tr>
@@ -204,7 +197,7 @@
 
     <!-- TASK 7 -->
     <section class="user-nopoor">
-      <h2>Users who posted No Poor Reviews</h2>
+      <h2>7.Users who posted No Poor Reviews</h2>
       <table>
         <thead>
           <tr>
@@ -224,7 +217,7 @@
     <!-- TASK 8 -->
     <section class="user-poor-reviews">
       {% if poor_review_users %}
-      <h2>Users who posted only "Poor" reviews:</h2>
+      <h2>8.Users who posted only "Poor" reviews:</h2>
       <table>
         <thead>
           <tr>
@@ -244,7 +237,7 @@
 
     <!-- TASK 9-->
     <section class="good-item-users">
-      <h2>User who've never received a Poor Review'</h2>
+      <h2>9.User who've never received a Poor Review'</h2>
       <table>
         <thead>
           <tr>
@@ -263,7 +256,7 @@
 
     <!-- TASK 10, Not sure if working properly -->
     <section class="pair-excellent">  
-      <h2>Always Rating Each Other Excellent'</h2>
+      <h2>10.Always Rating Each Other Excellent'</h2>
       <table>
         <thead>
           <tr>

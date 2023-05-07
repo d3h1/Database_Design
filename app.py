@@ -186,7 +186,7 @@ def add_favorite():
         else:
             return redirect(url_for('searchbar'))
 
-    return render_template('add_favorite.html')
+    return render_template('searchbar.html')
 
 
 @app.route('/searchbar', methods=['GET', 'POST'])
@@ -304,9 +304,17 @@ def marketplace():
         excellent_users = c.fetchall()
         
         # !(TASK 7)
-        # Fetch all usernames from the database for the given rating of Poor
-        c.execute('SELECT DISTINCT username FROM reviews WHERE rating!=?', ('Poor',))
-        users2 = c.fetchall()
+        # Fetch all usernames from the database for a user not giving a Poor rating
+        c.execute('''
+            SELECT DISTINCT username
+            FROM reviews
+            WHERE username NOT IN (
+                SELECT DISTINCT username
+                FROM reviews
+                WHERE rating = "Poor"
+            )
+        ''')
+        users2= c.fetchall()
         
         # !(TASK 8)
         # Display all the users who posted reviews with a rating of "Poor"
@@ -316,7 +324,12 @@ def marketplace():
                         SELECT DISTINCT username 
                         FROM reviews 
                         WHERE rating != "Poor"
-                )''')
+                        AND username IN (
+                            SELECT DISTINCT username 
+                            FROM reviews 
+                            WHERE rating != "Poor"
+                        )
+                    )''')
         poor_review_users = c.fetchall()
         
         # !(TASK 9)
