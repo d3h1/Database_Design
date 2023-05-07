@@ -11,7 +11,6 @@
     />
   </head>
   <body>
-    
     <div class="container">
       <nav class="active">
         <h1>Welcome, {{name}}!</h1>
@@ -20,9 +19,7 @@
           <li><a href="{{ url_for('searchbar') }}">Search</a></li>
           <li><a href="{{ url_for('marketplace') }}">Marketplace</a></li>
           <li><a href="{{ url_for('handle_signin') }}">Logout</a></li>
-          
         </ul>
-
       </nav>
 
       <section class="prof-info">
@@ -42,12 +39,14 @@
       </section>
 
       <section class="search-btns">
-
         <h2>Time To Search!</h2>
         <div class="form-control">
-          <a href="{{ url_for('searchbar') }}"><button class="btn button1" type="button">Search For Items</button></a>
+          <a href="{{ url_for('searchbar') }}"
+            ><button class="btn button1" type="button">
+              Search For Items
+            </button></a
+          >
         </div>
-
       </section>
     </div>
   </body>
