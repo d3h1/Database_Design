@@ -1,19 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
+@import url("https://fonts.googleapis.com/css?family=Muli&dispaly=swap");
 
 :root {
-  --background-main: #f5f5f5;
+  --background-main: #afafaf;
   --background-header: #333;
   --background-button: #555;
   --background-error: #f8d7da;
-  --background-submit: #dff0d8; 
+  --background-submit: #dff0d8;
   --submit-border: #c1eb9e;
-  --submit-color: #4CAF50;
+  --submit-color: #4caf50;
   --form-border: #ccc;
   --error-border: #f5c6cb;
   --error-color: #721c24;
   --text-color: #fff;
 }
-
 
 /* Global styles */
 * {
@@ -21,7 +20,7 @@
 }
 
 body {
-  font-family: 'Muli', sans-serif;
+  font-family: "Muli", sans-serif;
   margin: 0;
   padding: 0;
   background-color: var(--background-main);
@@ -55,10 +54,10 @@ table th {
 
 section {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 10px auto 10px;
   padding: 32px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 27px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
+@import url("https://fonts.googleapis.com/css?family=Muli&dispaly=swap");
 
 :root {
   --background-main: #afafaf;
   --background-header: #333;
   --background-button: #555;
   --background-error: #f8d7da;
-  --background-submit: #dff0d8; 
+  --background-submit: #dff0d8;
   --submit-border: #c1eb9e;
-  --submit-color: #4CAF50;
+  --submit-color: #4caf50;
   --form-border: #ccc;
   --error-border: #f5c6cb;
   --error-color: #ab2b38;
@@ -15,7 +15,7 @@
 }
 
 body {
-  font-family: 'Muli', sans-serif;
+  font-family: "Muli", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +34,6 @@ body {
   border-radius: 5px;
 }
 
-
 /* Styles for the heading */
 h1 {
   text-align: center;
@@ -49,7 +48,6 @@ h1 {
   width: 300px;
 }
 
-
 /* Styles for the input fields */
 .form-control input[type="text"],
 .form-control input[type="password"] {
@@ -63,10 +61,10 @@ h1 {
   color: var(--text-color);
 }
 
-.form-control input:focus, 
+.form-control input:focus,
 .form-control input:valid {
-  outline: 0; 
-  border-bottom-color: var(--background-button); 
+  outline: 0;
+  border-bottom-color: var(--background-button);
 }
 
 /* Styles for the labels */
@@ -81,19 +79,19 @@ h1 {
   font-size: 18px;
   min-width: 5px;
   transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-} 
+}
 
 .form-control input:focus + label span,
 .form-control input:valid + label span {
   color: var(--background-button);
-  transform: translateY(-30px)
+  transform: translateY(-30px);
 }
-  
+
 /* Styles for the submit button */
 .signin[type="submit"] {
   cursor: pointer;
   display: inline-block;
-  border: 1px solid var(--submit-border); 
+  border: 1px solid var(--submit-border);
   border-radius: 5px;
   color: var(--submit-color);
   background-color: var(--background-submit);
@@ -110,7 +108,6 @@ h1 {
   scale: (0.98);
 }
 
-  
 /* Styles for the link to sign up */
 p {
   margin-top: 20px;
@@ -123,7 +120,7 @@ a {
 
 .btn {
   cursor: pointer;
-  border: 1px solid var(--form-border); 
+  border: 1px solid var(--form-border);
   border-radius: 5px;
   color: var(--text-color);
   background-color: var(--background-button);
@@ -141,34 +138,34 @@ a {
 }
 
 .btn:active {
-  transform: scale(.98);
+  transform: scale(0.98);
 }
 
 .error-messages {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .error-messages .messages {
-    /* background-color: var(--background-error);
+  /* background-color: var(--background-error);
     border: 1px solid var(--error-border); */
-    color: var(--error-color);
-    padding: 1em;
-    border-radius: 0.25rem;
-    font-weight: bold;
-    margin: 1em 0;
-    text-align: center;
-    max-width: 600px;
+  color: var(--error-color);
+  padding: 1em;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  margin: 1em 0;
+  text-align: center;
+  max-width: 600px;
 }
 
 .error-messages .flashes {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 .error-messages .flashes li {
-    margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }

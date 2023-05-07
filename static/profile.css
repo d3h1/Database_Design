@@ -1,22 +1,21 @@
-@import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
+@import url("https://fonts.googleapis.com/css?family=Muli&dispaly=swap");
 
 :root {
   --background-main: #afafaf;
   --background-header: #333;
   --background-button: #555;
   --background-error: #f8d7da;
-  --background-submit: #dff0d8; 
+  --background-submit: #dff0d8;
   --submit-border: #c1eb9e;
-  --submit-color: #4CAF50;
+  --submit-color: #4caf50;
   --form-border: #ccc;
   --error-border: #f5c6cb;
   --error-color: #ab2b38;
   --text-color: #fff;
 }
 
-
 body {
-  font-family: 'Muli', sans-serif;
+  font-family: "Muli", sans-serif;
   overflow: hidden;
   margin: 0;
   background-color: var(--background-main);
@@ -39,7 +38,7 @@ nav.active {
   display: grid;
   width: 100%;
   border-radius: 3px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 nav.active h1 {
@@ -57,9 +56,8 @@ nav.active ul {
   list-style-type: none;
   padding: 0;
   margin-left: 1rem;
-  width: 0%
+  width: 0%;
 }
-
 
 nav.active ul a {
   color: var(--text-color);
@@ -69,7 +67,7 @@ nav.active ul a {
 
 .prof-info {
   background-color: var(--background-button);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   grid-column-start: 1;
   grid-column-end: 2;
   display: flex;
@@ -81,7 +79,7 @@ nav.active ul a {
 
 .search-btns {
   background-color: var(--background-button);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   grid-column-start: 2;
   grid-column-end: 3;
   display: flex;
@@ -90,7 +88,6 @@ nav.active ul a {
   align-items: center;
   text-align: center;
 }
-
 
 h2 {
   text-align: center;
@@ -103,7 +100,6 @@ ul {
   padding: 0;
 }
 
-
 /* Section styles */
 section {
   padding: 1rem;
@@ -114,7 +110,9 @@ label {
   margin-top: 0.5rem;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   padding: 0.5rem;
   margin-bottom: 1rem;
   border-radius: 5px;
@@ -124,7 +122,7 @@ input, select, textarea {
 
 .btn {
   cursor: pointer;
-  border: 3px solid var(--submit-border); 
+  border: 3px solid var(--submit-border);
   border-radius: 5px;
   color: var(--text-color);
   background-color: var(--submit-color);
@@ -148,8 +146,8 @@ input, select, textarea {
 
 .btn:hover {
   background-color: var(--submit-border);
-  color:#333;
-  transform: scale(0.95)
+  color: #333;
+  transform: scale(0.95);
 }
 
 .btn:active {

@@ -1,19 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Muli&dispaly=swap');
+@import url("https://fonts.googleapis.com/css?family=Muli&dispaly=swap");
 
 :root {
-  --background-main: #f5f5f5;
+  --background-main: #afafaf;
   --background-header: #333;
   --background-button: #555;
   --background-error: #f8d7da;
-  --background-submit: #dff0d8; 
+  --background-submit: #dff0d8;
   --submit-border: #c1eb9e;
-  --submit-color: #4CAF50;
-  --form-border: #ccc;
+  --submit-color: #4caf50;
+  --form-border: #dad9d9;
   --error-border: #f5c6cb;
   --error-color: #721c24;
   --text-color: #fff;
 }
-
 
 /* Global styles */
 * {
@@ -21,13 +20,23 @@
 }
 
 body {
-  font-family: 'Muli', sans-serif;
-  margin: 0;
+  font-family: "Muli", sans-serif;
   padding: 0;
   background-color: var(--background-main);
 }
 
-h1,h2 {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > * {
+  min-width: 1000px;
+}
+
+h1,
+h2 {
   font-weight: bold;
   font-size: 24px;
   margin-bottom: 16px;
@@ -40,24 +49,16 @@ table {
   margin: 16px 0;
 }
 
-
-
 ul {
   list-style: none;
   padding: 0;
-}
-
-/* Header styles */
-header {
-  background-color: var(--background-header);
-  color: var(--text-color);
-  padding: 1rem;
 }
 
 /* Form styles */
 form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 
@@ -90,6 +91,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 16px;
+  margin-bottom: 1rem;
 }
 
 nav ul {
@@ -160,10 +162,11 @@ input[type="submit"]:hover {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0;
+  background-color: var(--form-border);
 }
 
 #search-results li {
-  background-color: var(--background-main);
+  background-color: var(--form-border);
   border-radius: 5px;
   margin-bottom: 1rem;
   width: 30%;
@@ -201,7 +204,7 @@ input[type="submit"]:hover {
 
 /* Search section styles */
 .search-section {
-  background-color: var(--background-main);
+  background-color: var(--form-border);
   margin: 1rem;
   padding: 1rem;
   border-radius: 5px;
@@ -209,7 +212,7 @@ input[type="submit"]:hover {
 
 /* Results section styles */
 .results-section {
-  background-color: var(--background-main);
+  background-color: var(--form-border);
   margin: 1rem;
   padding: 1rem;
   border-radius: 5px;
@@ -217,22 +220,66 @@ input[type="submit"]:hover {
 
 /* Add item section styles */
 .add-item-section {
-  background-color: var(--background-main);
+  background-color: var(--form-border);
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.add-favorite-section {
+  background-color: var(--form-border);
   margin: 1rem;
   padding: 1rem;
   border-radius: 5px;
 }
 
 /* Search bar button styles */
-.search-bar-btn {
-  background-color: var(--background-button);
-  color: var(--text-color);
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: none;
+.search-section button {
   cursor: pointer;
-  font-size: 1rem;
+  border: 3px solid var(--submit-border);
+  border-radius: 5px;
+  color: var(--text-color);
+  background-color: var(--submit-color);
   margin: 1rem;
+  padding: 5px 50px;
+  width: 75%;
+  font-family: inherit;
+  font-size: 14px;
+  border: 0;
+  border-radius: 5px;
+  margin-top: 40px;
+}
+
+.add-item-section button {
+  cursor: pointer;
+  border: 3px solid var(--submit-border);
+  border-radius: 5px;
+  color: var(--text-color);
+  background-color: var(--submit-color);
+  margin: 1rem;
+  padding: 5px 50px;
+  width: 75%;
+  font-family: inherit;
+  font-size: 14px;
+  border: 0;
+  border-radius: 5px;
+  margin-top: 40px;
+}
+
+.add-favorite-section button {
+  cursor: pointer;
+  border: 3px solid var(--submit-border);
+  border-radius: 5px;
+  color: var(--text-color);
+  background-color: var(--submit-color);
+  margin: 1rem;
+  padding: 5px 50px;
+  width: 75%;
+  font-family: inherit;
+  font-size: 14px;
+  border: 0;
+  border-radius: 5px;
+  margin-top: 40px;
 }
 
 .search-bar-btn:hover {
