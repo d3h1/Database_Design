@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, session, make_response
 import sqlite3
 import os
 from datetime import datetime, timedelta
@@ -114,14 +114,15 @@ def handle_signin():
                 flash('Invalid username or password!', app.config['FLASH_CATEGORY'])
             else:
                 flash('Sign in successful!', app.config['FLASH_CATEGORY'])
-                return redirect(url_for('profile',username=user[0], email=user[1], firstName=user[2], lastName=user[3]))
+                response = make_response(redirect(url_for('profile',username=user[0], email=user[1], firstName=user[2], lastName=user[3])))
+                response.set_cookie('username', user[0])
+                return response
                 
     return render_template('signin.html')
 
 
 @app.route('/profile/<firstName>/<lastName>/<username>/<email>')
-def profile(firstName, lastName, username, email):
-    
+def profile(firstName, lastName, username, email):    
     return render_template('profile.html', name=firstName + " " + lastName, username=username, email=email) 
 
 
@@ -194,6 +195,7 @@ def searchusers():
             print(item)
     return render_template('searchusers.html')
 
+# PHASE 3 - Tasks
 @app.route('/marketplace')
 def marketplace():
         with sqlite3.connect(db_path) as conn:
@@ -315,7 +317,6 @@ def search_items():
             items = c.fetchall()
             return render_template('searchbar.html', search_results=items)
     return redirect(url_for('searchbar'))
-
 
 
 @app.route('/item/<int:item_id>/')
