@@ -63,6 +63,7 @@ nav.active ul a {
   color: var(--text-color);
   text-decoration: none;
   margin: 0 10px;
+  font-size: 18px
 }
 
 .prof-info {
