@@ -250,10 +250,27 @@ def marketplace():
         # Get the username entered by the user 
         username = request.args.get('username')
         
-        # *(TASK 3 - modified)
-        # Fetch all reviews from the database for the given username and rating, along with the corresponding item titles
-        c.execute('SELECT r.id, r.username, i.title, r.rating, r.description, r.date FROM reviews r JOIN items i ON r.item_id = i.id WHERE r.username=? AND r.rating IN ("Excellent", "Great")', (username,))
-        reviews = c.fetchall()
+        # (TASK 3 - modified)
+        # Fetch all items posted by the given username that have received only "Excellent" or "Great" reviews
+        c.execute('SELECT i.id, i.username, i.title, i.description, i.category, i.price, r.rating, r.date FROM items i JOIN reviews r ON i.id = r.item_id WHERE i.username=? AND r.rating IN ("Excellent", "Great") GROUP BY i.id HAVING COUNT(*) = SUM(CASE WHEN r.rating IN ("Excellent", "Great") THEN 1 ELSE 0 END)', (username,))
+        items = c.fetchall()
+
+        # Display the items in an HTML table
+        if items:
+            html = '<table>'
+            html += '<tr><th>Title</th><th>Description</th><th>Category</th><th>Price</th><th>Rating</th><th>Review Date</th></tr>'
+            for item in items:
+                html += '<tr>'
+                html += '<td>' + item[2] + '</td>'
+                html += '<td>' + item[3] + '</td>'
+                html += '<td>' + item[4] + '</td>'
+                html += '<td>$' + str(item[5]) + '</td>'
+                html += '<td>' + item[6] + '</td>'
+                html += '<td>' + item[7] + '</td>'
+                html += '</tr>'
+            html += '</table>'
+        else:
+            html = 'No items found'
         
         # !(TASK 4)
         # List the users who posted the most number of items since 5/1/2020 (inclusive) 
@@ -294,7 +311,7 @@ def marketplace():
             common_favorites = None
             
         # !(TASK 6)
-        # Display all the users who never posted any "excellent" items
+        # Display all the users who never posted any "excellent" items where excellent is any item with at least three excellent reviews
         c.execute('''
             SELECT DISTINCT items.username
             FROM items
@@ -304,7 +321,7 @@ def marketplace():
         excellent_users = c.fetchall()
         
         # !(TASK 7)
-        # Fetch all usernames from the database for a user not giving a Poor rating
+        # Fetch all usernames from the database that have never rated something 'poor'
         c.execute('''
             SELECT DISTINCT username
             FROM reviews
@@ -317,7 +334,7 @@ def marketplace():
         users2= c.fetchall()
         
         # !(TASK 8)
-        # Display all the users who posted reviews with a rating of "Poor"
+        # Display all the users who posted reviews with only ratings of "Poor"
         c.execute('''SELECT DISTINCT username 
                     FROM reviews 
                     WHERE username NOT IN (
@@ -360,7 +377,7 @@ def marketplace():
 
 
     
-        return render_template('marketplace.html', item_results=items, max_prices=max_prices, users=users, users2=users2, reviews=reviews, top_users=top_users, excellent_users=excellent_users, poor_review_users=poor_review_users, good_item_users=good_item_users, excellent_review_pairs=ret, common_favorites=common_favorites, usernames=usernames, favorite_users=favorite_users)
+        return render_template('marketplace.html', item_results=items, max_prices=max_prices, users=users, users2=users2, items=items, top_users=top_users, excellent_users=excellent_users, poor_review_users=poor_review_users, good_item_users=good_item_users, excellent_review_pairs=ret, common_favorites=common_favorites, usernames=usernames, favorite_users=favorite_users)
 
 
 

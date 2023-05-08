@@ -74,35 +74,39 @@
 
     <!-- TASK 3 -->
     <section class="user-rating">
-      <h2>3.Search User Items with Only Excellent/Great Ratings</h2>
+      <h2>3. Search User Items with Only Excellent Ratings</h2>
       <form method="get" action="{{ url_for('marketplace') }}">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" />
         <input type="submit" value="Search" />
       </form>
 
-      {% if reviews %}
-
+      {% if items %}
+      <h3>Items with Only Excellent Ratings by {{ username }}</h3>
       <table>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Username</th>
-            <th>Item</th>
-            <th>Rating</th>
+            <th>Item Poster</th>
+            <th>Title</th>
             <th>Description</th>
-            <th>Date</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Review Date</th>
           </tr>
         </thead>
         <tbody>
-          {% for review in reviews %}
+          {% for item in items %}
           <tr>
-            <td>{{ review[0] }}</td>
-            <td>{{ review[1] }}</td>
-            <td>{{ review[2] }}</td>
-            <td>{{ review[3] }}</td>
-            <td>{{ review[4] }}</td>
-            <td>{{ review[5] }}</td>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
+            <td>{{ item[5] }}</td>
+            <td>{{ item[6] }}</td>
+            <td>{{ item[7] }}</td>
           </tr>
           {% endfor %}
         </tbody>
