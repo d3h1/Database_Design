@@ -1,28 +1,52 @@
 @import url("https://fonts.googleapis.com/css?family=Muli&dispaly=swap");
 
 :root {
-  --background-main: #f5f5f5;
+  --background-main: #afafaf;
   --background-header: #333;
   --background-button: #555;
   --background-error: #f8d7da;
-  --background-submit: #4caf50;
-  --background-review: #dbdbdb;
-  --review-border: #161616;
+  --background-submit: #dff0d8;
+  --submit-border: #c1eb9e;
+  --submit-color: #4caf50;
+  --form-border: #dad9d9;
   --error-border: #f5c6cb;
   --error-color: #721c24;
   --text-color: #fff;
 }
 
 /* Global styles */
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Muli", sans-serif;
-  margin: 0;
   padding: 0;
+  background-color: var(--background-main);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > * {
+  min-width: 1000px;
 }
 
 h1,
 h2 {
   font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 16px 0;
 }
 
 ul {
@@ -30,23 +54,11 @@ ul {
   padding: 0;
 }
 
-/* Header styles */
-header {
-  background-color: var(--background-header);
-  color: var(--text-color);
-  padding: 1rem;
-}
-
-/* Section styles */
-section {
-  padding: 1rem;
-  margin: 3rem;
-}
-
 /* Form styles */
 form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin-bottom: 1rem;
 }
 
@@ -54,34 +66,56 @@ label {
   margin-top: 0.5rem;
 }
 
-input,
-select,
-textarea {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  border: none;
-  font-size: 1rem;
+
+section {
+  max-width: 800px;
+  margin: 0 auto 10px ;
+  padding: 32px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-button[type="submit"],
-.search-bar-btn {
-  background-color: var(--background-button);
-  color: var(--text-color);
-  padding: 0.5rem;
-  margin-left: 15rem;
-  margin-right: 15rem;
+nav {
+  background-color: var(--background-header);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
   margin-bottom: 1rem;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin-right: 16px;
+}
+
+nav ul li:last-child {
+  margin-right: 0;
+}
+
+nav ul li a {
+  color: #fff;
   text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
 }
 
-button[type="submit"]:hover,
-.search-bar-btn:hover {
-  background-color: var(--background-button);
+nav ul li a:hover {
+  color: #ccc;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
 
 /* Item details */
@@ -91,14 +125,18 @@ button[type="submit"]:hover,
 }
 
 /* Reviews styles */
-.reviews .review {
-  background-color: var(--background-review);
+section .reviews {
+  background-color: var(--background-button);
   border-radius: 5px;
   border-color: var(--review-border);
   padding: 1rem;
   margin-left: 10rem;
   margin-right: 10rem;
   margin-bottom: 1rem;
+}
+
+section .item-details ul {
+  border: 1px solid #333;
 }
 
 .reviews .review p,
@@ -112,14 +150,42 @@ input {
   border-style: solid var(--review-border);
 }
 
-/* Footer */
-footer {
-  background-color: var(--background-header);
-  color: var(--text-color);
-  padding: 1rem;
-  text-align: center;
-  margin-top: 2rem;
+.submit-review input, textarea, select {
+  border:#333 1px solid;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
 }
+
+.submit-review select {
+  text-align: center;
+}
+
+.submit-review select:focus {
+  text-align: center;
+  color: var(--submit-color);
+  background-color: var(--submit-border);
+}
+
+.submit-review a, button {
+  background-color: var(--submit-color);
+  color: var(--submit-border);
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.submit-review a:hover,button:hover {
+  background-color: var(--submit-border);
+  color: var(--submit-color);
+}
+
 
 .error-messages {
   display: flex;
@@ -129,8 +195,6 @@ footer {
 }
 
 .error-messages .messages {
-  background-color: var(--background-error);
-  border: 1px solid var(--error-border);
   color: var(--error-color);
   padding: 1em;
   border-radius: 0.25rem;
