@@ -8,10 +8,19 @@ Allowed the user to add items, reviews, and search for categories. With this, th
 post, and more. 
 <br><b>Link to Phase 2</b>: https://youtu.be/CIbhRpu4Fr4
 
-<b>Phase 3</b> : Added lists for expensive items, users posting twice, filtering users based on their comments | date | etc. We 
-also base item lists on most number of items within a date range. Posts never receiving comments or categories can also be filtered, etc. 
-We can also display users whoe posted certain things. 
-<br><b>Link to Phase 3</b>:
+<b>Phase 3</b> : Based on parts 1 & 2, implement the following functionality using your selected programing language
+and SQL with necessary GUI interfaces. Part 3 emphasizes both the interfaces and their integration
+with backend database operations.
+Task 1: Most Expensive in each category
+Task 2: User posting 2 Items a day, different categories
+Task 3: All items of User X that is ONLY Excellent
+Task 4: User with most posted items since  5/1/2020
+Task 5: Both User X and Y's Favorite is User Z
+Task 6: Display users who have posted only excellent items (an item with atleast three excellent reviews)
+Task 7: Display users that have never rated anything "Poor"
+Task 8: Display users who have only posted "Poor" reviews
+Task 9: Display users that have never recieved "Poor" reviews
+Task 10: Display user pair where they have ONLY rated each other excellent
 
 ## Project Information
 <!-- Contributions -->
@@ -21,7 +30,10 @@ app.py - Deni, Matthew, Aaron<br>
 <b>CSS</b>
 searchbar.css, profile.css - Matthew, Deni
 selected.css, styles.css - Aaron, Matthew
+signup.css - Aaron, Deni
+profile.css - Deni, Aaron
 signin.css, signup.css - Deni
+marketplace.css - Deni, Aaron, Matthew
 
 <b>HTML</b>
 All HTML Files -- Matthew, Aaron, Deni
