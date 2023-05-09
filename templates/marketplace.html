@@ -139,33 +139,33 @@
 
     <!-- TASK 5 -->
     <section class="common-favorites-section">
-      <h2>5.Find Users with Common Favorite Users</h2>
+      <h2>5. Find Users with Common Favorite Users</h2>
       <form method="post" action="{{ url_for('marketplace') }}">
-        <label for="username">Select a username:</label>
-        <select name="username" id="username">
-          <option value="" disabled selected hidden>INDIVIDUAL</option>
+        <label for="username1">Select the first username:</label>
+        <select name="username1" id="username1">
+          <option value="" disabled selected hidden>INDIVIDUAL 1</option>
           {% for user in usernames %}
           <option value="{{ user[0] }}">{{ user[0] }}</option>
           {% endfor %}
         </select>
         <br /><br />
-        <label for="favorite_user">Select a favorite user:</label>
-        <select name="favorite_user" id="favorite_user">
-          <option value="" disabled selected hidden>FAVORITE</option>
-          {% for user in favorite_users %}
+        <label for="username2">Select the second username:</label>
+        <select name="username2" id="username2">
+          <option value="" disabled selected hidden>INDIVIDUAL 2</option>
+          {% for user in usernames %}
           <option value="{{ user[0] }}">{{ user[0] }}</option>
           {% endfor %}
         </select>
         <br /><br />
         <input type="submit" value="Search" />
       </form>
-
+    
       {% if common_favorites %}
-      <h2>Users with Common Favorite User:</h2>
+      <h2>Common Favorite Users:</h2>
       <table>
         <thead>
           <tr>
-            <th>Username</th>
+            <th>Favorite User</th>
           </tr>
         </thead>
         <tbody>
